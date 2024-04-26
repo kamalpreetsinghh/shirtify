@@ -11,19 +11,23 @@
 
   --text-color-light: rgb(0, 0, 0);
   --background-color-light: rgb(255, 255, 255);
+  --text-grey-color-light: rgb(86, 86, 86);
 
   --text-color-dark: rgb(255, 255, 255);
   --background-color-dark: rgb(0, 0, 0);
+  --text-grey-color-dark: rgb(156 163 175);
 }
 
 html.dark {
   --text-color: var(--text-color-dark);
   --background-color: var(--background-color-dark);
+  --text-grey-color: var(--text-grey-color-dark);
 }
 
 html.light {
   --text-color: var(--text-color-light);
   --background-color: var(--background-color-light);
+  --text-grey-color: var(--text-grey-color-light);
 }
 
 body {
@@ -35,4 +39,23 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.text-grey-color {
+  color: var(--text-grey-color);
+}
+
+.background-color {
+  background-color: var(--background-color);
+}
+
+.rounded-button {
+  @apply transition-all text-center text-sm font-semibold 
+  py-2 px-5 rounded-full text-white;
+  background-color: var(--primary-color);
+}
+
+.rounded-button:hover {
+  color: var(--background-color);
+  background-color: var(--text-color);
 }
