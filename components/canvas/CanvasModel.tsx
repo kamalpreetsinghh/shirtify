@@ -5,13 +5,13 @@ import Shirt from "./Shirt";
 import Backdrop from "./Backdrop";
 import CameraRig from "./CameraRig";
 
-const CanvasModel = () => {
+const CanvasModel = ({ className }: { className: string }) => {
   return (
     <Canvas
       shadows
       camera={{ position: [0, 0, 0], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
-      className="w-full max-w-full h-full transition-all ease-in background-color"
+      className={`${className} transition-all ease-in background-color`}
     >
       <ambientLight intensity={0.5} />
       <Environment preset="city" />

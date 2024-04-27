@@ -1,3 +1,5 @@
+"use client";
+
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
@@ -13,13 +15,13 @@ const CameraRig = ({
   const snap = useSnapshot(state);
 
   useFrame((state, delta) => {
-    const isBreakPoint = window.innerWidth <= 1260;
+    const isWeb = window.innerWidth <= 1260;
     const isMobile = window.innerWidth <= 600;
 
     // set the initial position of the model
-    let targetPosition: [x: number, y: number, z: number] = [-0.4, 0, 2];
+    let targetPosition: [x: number, y: number, z: number] = [0, 0, 1.5];
     if (snap.intro) {
-      if (isBreakPoint) targetPosition = [0, 0, 2];
+      if (isWeb) targetPosition = [0, 0, 2];
       if (isMobile) targetPosition = [0, 0.2, 2.5];
     } else {
       if (isMobile) targetPosition = [0, 0, 2.5];
