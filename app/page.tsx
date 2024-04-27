@@ -8,6 +8,7 @@ import {
   slideAnimation,
 } from "@/lib/motion";
 import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
           <motion.div className="flex flex-col gap-10">
             <motion.div {...headTextAnimation}>
               <h1
-                className="xl:text-[8rem] text-[4rem] xl:leading-[10rem] leading-[7rem] 
+                className="xl:text-[10rem] text-[4rem] xl:leading-[11rem] leading-[7rem] 
             font-black md:text-start text-center"
               >
                 LET'S
@@ -40,7 +41,9 @@ export default function Home() {
                 <strong>Wear Innovation, Wear Exclusivity</strong>
               </p>
               <div className="w-full flex xl:justify-start justify-center">
-                <button className="rounded-button">Customize it</button>
+                <Link href="/customize" className="rounded-button">
+                  Customize it
+                </Link>
               </div>
             </motion.div>
           </motion.div>

@@ -20,7 +20,9 @@ const Navbar = () => {
         <ThemeSwitch />
         <>
           <SignedOut>
-            <SignInButton />
+            <div className="rounded-button">
+              <SignInButton />
+            </div>
           </SignedOut>
           <SignedIn>
             <UserButton />

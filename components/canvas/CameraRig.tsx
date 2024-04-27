@@ -20,13 +20,9 @@ const CameraRig = ({
 
     // set the initial position of the model
     let targetPosition: [x: number, y: number, z: number] = [0, 0, 1.5];
-    if (snap.intro) {
-      if (isWeb) targetPosition = [0, 0, 2];
-      if (isMobile) targetPosition = [0, 0.2, 2.5];
-    } else {
-      if (isMobile) targetPosition = [0, 0, 2.5];
-      else targetPosition = [0, 0, 2];
-    }
+
+    if (isWeb) targetPosition = [0, 0, 2];
+    if (isMobile) targetPosition = [0, 0.2, 2.5];
 
     // set model camera position
     easing.damp3(state.camera.position, targetPosition, 0.25, delta);
