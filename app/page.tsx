@@ -27,7 +27,7 @@ export default function Home() {
                 className="xl:text-[10rem] text-[4rem] xl:leading-[11rem] leading-[7rem] 
             font-black md:text-start text-center"
               >
-                LET'S
+                LET&apos;S
                 <br className="hidden xl:block" /> DO IT.
               </h1>
             </motion.div>
