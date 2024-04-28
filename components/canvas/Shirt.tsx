@@ -25,7 +25,6 @@ const Shirt = () => {
   return (
     <group key={stateString}>
       <mesh
-        castShadow
         geometry={object3dEventMap.geometry}
         material={materials.lambert1}
         material-roughness={1}
@@ -44,7 +43,7 @@ const Shirt = () => {
           <Decal
             position={[0, 0.04, 0.15]}
             rotation={[0, 0, 0]}
-            scale={0.15}
+            scale={0.18}
             map={logoImage}
             depthTest={false}
           />

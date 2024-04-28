@@ -9,7 +9,6 @@ import { Suspense } from "react";
 const CanvasModel = ({ className }: { className: string }) => {
   return (
     <Canvas
-      shadows
       camera={{ position: [0, 0, 0], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
       className={`${className} transition-all ease-in background-color`}
