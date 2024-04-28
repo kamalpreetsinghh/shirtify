@@ -1,7 +1,6 @@
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
 import ThemeSwitch from "./ThemeSwitch";
 
 const Navbar = () => {

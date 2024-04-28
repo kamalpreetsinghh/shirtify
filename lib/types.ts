@@ -16,21 +16,26 @@ export type ITabInfo = {
   icon: string;
 };
 
-export type IDecalType = "logo" | "full";
-
-export type IDecal = {
-  logo: IDecalInfo;
-  full: IDecalInfo;
-};
-
-export type IDecalInfo = {
-  stateProperty: string;
-  filterTab: string;
-};
+export type IDecalType = "logoImage" | "fullImage";
 
 export type IAIPicker = {
   prompt: string;
   setPrompt: (value: string) => void;
   generatingImg: any;
   handleSubmit: () => void;
+};
+
+export type ICustomization = {
+  userId: string;
+  logoImage: string;
+  fullImage: string;
+  color: string;
+};
+
+export type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+  avatar: string | null;
+  bio: string | null;
 };

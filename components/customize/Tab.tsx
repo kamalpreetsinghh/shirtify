@@ -13,6 +13,8 @@ const Tab = ({
 }: ITab) => {
   const snap = useSnapshot(state);
 
+  console.log(tab);
+
   const activeStyles =
     isFilterTab && isActiveTab
       ? { backgroundColor: snap.color, opacity: 0.5 }
@@ -32,7 +34,7 @@ const Tab = ({
         alt={tab.name}
         width={40}
         height={40}
-        objectFit="cover"
+        style={{ objectFit: "cover" }}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import { IDecal, ITabInfo } from "./types";
+import { ITabInfo } from "./types";
 
 export const EditorTabs: ITabInfo[] = [
   {
@@ -17,22 +17,13 @@ export const EditorTabs: ITabInfo[] = [
 
 export const FilterTabs: ITabInfo[] = [
   {
-    name: "logoShirt",
+    name: "logoImage",
     icon: "/assets/images/logo-tshirt.png",
   },
   {
-    name: "stylishShirt",
+    name: "fullImage",
     icon: "/assets/images/stylish-tshirt.png",
   },
 ];
 
-export const DecalTypes: IDecal = {
-  logo: {
-    stateProperty: "logoDecal",
-    filterTab: "logoShirt",
-  },
-  full: {
-    stateProperty: "fullDecal",
-    filterTab: "stylishShirt",
-  },
-};
+export const DecalTypes = ["logoImage", "fullImage"];

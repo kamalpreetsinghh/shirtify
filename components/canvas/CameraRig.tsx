@@ -3,8 +3,6 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { easing } from "maath";
-import { useSnapshot } from "valtio";
-import state from "@/store";
 
 const CameraRig = ({
   children,
@@ -12,7 +10,6 @@ const CameraRig = ({
   children: React.ReactNode;
 }>) => {
   const group = useRef(null);
-  const snap = useSnapshot(state);
 
   useFrame((state, delta) => {
     const isWeb = window.innerWidth <= 1260;

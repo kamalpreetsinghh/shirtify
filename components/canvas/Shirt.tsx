@@ -5,17 +5,20 @@ import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
 import state from "@/store";
+import { Color } from "three";
 
 const Shirt = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF("/assets/threedmodels/shirt_baked.glb");
+  const object3dEventMap = nodes.T_Shirt_male as any;
 
-  const logoTexture = useTexture(snap.logoDecal);
-  const fullTexture = useTexture(snap.fullDecal);
+  const logoImage = useTexture(snap.logoImage);
+  const fullImage = useTexture(snap.fullImage);
 
-  useFrame((state, delta) =>
-    easing.dampC(materials.lambert1.color, snap.color, 0.25, delta)
-  );
+  useFrame((state, delta) => {
+    const lambertMaterial = materials.lambert1 as any;
+    easing.dampC(lambertMaterial.color as Color, snap.color, 0.25, delta);
+  });
 
   const stateString = JSON.stringify(snap);
 
@@ -23,26 +26,26 @@ const Shirt = () => {
     <group key={stateString}>
       <mesh
         castShadow
-        geometry={nodes.T_Shirt_male.geometry}
+        geometry={object3dEventMap.geometry}
         material={materials.lambert1}
         material-roughness={1}
         dispose={null}
       >
-        {snap.isFullTexture && (
+        {snap.isFullImage && (
           <Decal
             position={[0, 0, 0]}
             rotation={[0, 0, 0]}
             scale={1}
-            map={fullTexture}
+            map={fullImage}
           />
         )}
 
-        {snap.isLogoTexture && (
+        {snap.isLogoImage && (
           <Decal
             position={[0, 0.04, 0.15]}
             rotation={[0, 0, 0]}
             scale={0.15}
-            map={logoTexture}
+            map={logoImage}
             depthTest={false}
           />
         )}

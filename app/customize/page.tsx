@@ -1,28 +1,25 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import state from "@/store";
 import ColorPicker from "@/components/customize/ColorPicker";
 import FilePicker from "@/components/customize/FilePicker";
-import { fadeAnimation, slideAnimation } from "@/lib/motion";
+import { slideAnimation } from "@/lib/motion";
 import Tab from "@/components/customize/Tab";
-import { DecalTypes, EditorTabs, FilterTabs } from "@/lib/constants";
-import Link from "next/link";
+import { EditorTabs, FilterTabs } from "@/lib/constants";
 import { reader } from "@/lib/utils";
 import CanvasModel from "@/components/canvas/CanvasModel";
-import { IDecalType } from "@/lib/types";
-import AIPicker from "@/components/customize/AIPicker";
+import { ICustomization, IDecalType } from "@/lib/types";
+import { createCustomization } from "@/lib/actions/customize.action";
+import { ToastContainer } from "react-toastify";
+import { SignedIn, UserProfile } from "@clerk/nextjs";
 
 const CustomizePage = () => {
   const [file, setFile] = useState<File | null>(null);
-  const [prompt, setPrompt] = useState("");
-  const [generatingImg, setGeneratingImg] = useState(false);
   const [activeEditorTab, setActiveEditorTab] = useState("");
-  const [activeFilterTab, setActiveFilterTab] = useState<any>({
-    logoShirt: true,
-    stylishShirt: false,
-  });
+  const [isLogoActive, setIsLogoActive] = useState(state.isLogoImage);
+  const [isFullActive, setIsFullActive] = useState(state.isFullImage);
 
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -30,15 +27,6 @@ const CustomizePage = () => {
         return <ColorPicker />;
       case "filepicker":
         return <FilePicker file={file} setFile={setFile} readFile={readFile} />;
-      case "aipicker":
-        return (
-          <AIPicker
-            prompt={prompt}
-            setPrompt={setPrompt}
-            generatingImg={generatingImg}
-            handleSubmit={handleSubmit}
-          />
-        );
       default:
         return null;
     }
@@ -46,91 +34,95 @@ const CustomizePage = () => {
 
   const handleSubmit = () => {};
 
-  const handleDecals = (type: IDecalType, result: any) => {
-    const decalType = DecalTypes[type];
-    state[decalType.stateProperty] = result;
+  const handleDecals = (type: IDecalType, result: string) => {
+    state[type] = result as string;
 
-    if (!activeFilterTab[decalType.filterTab]) {
-      handleActiveFilterTab(decalType.filterTab);
+    if (type === "logoImage" && !state.isLogoImage) {
+      state.isLogoImage = true;
+    } else if (type === "fullImage" && !state.isFullImage) {
+      state.isFullImage = true;
     }
   };
 
-  const handleActiveFilterTab = (tabName: string) => {
-    switch (tabName) {
-      case "logoShirt":
-        state.isLogoTexture = !activeFilterTab[tabName];
-        break;
-      case "stylishShirt":
-        state.isFullTexture = !activeFilterTab[tabName];
-        break;
-      default:
-        state.isLogoTexture = true;
-        state.isFullTexture = false;
-        break;
+  const handleActiveFilterTab = (tabName: IDecalType) => {
+    if (tabName === "logoImage") {
+      state.isLogoImage = !state.isLogoImage;
+      setIsLogoActive(!isLogoActive);
+    } else if (tabName === "fullImage") {
+      state.isFullImage = !state.isFullImage;
+      setIsFullActive(!isFullActive);
     }
-
-    // after setting the state, activeFilterTab is updated
-
-    setActiveFilterTab((prevState: any) => {
-      return {
-        ...prevState,
-        [tabName]: !prevState[tabName],
-      };
-    });
   };
 
   const readFile = (type: IDecalType) => {
     if (file) {
       reader(file).then((result) => {
-        handleDecals(type, result);
+        handleDecals(type, result as string);
         setActiveEditorTab("");
       });
     }
+  };
+
+  const handleShare = async () => {
+    const customization: ICustomization = {
+      userId: UserProfile.name,
+      logoImage: state.logoImage,
+      fullImage: state.fullImage,
+      color: state.color,
+    };
+
+    const result = await createCustomization(customization);
   };
 
   return (
     <>
       <div className="flex flex-1 w-[100vw] h-[80vh]">
         <CanvasModel className="flex flex-1 w-full h-full" />
-        <AnimatePresence>
-          <motion.div
-            key="custom"
-            className="absolute top-0 left-0 z-10"
-            {...slideAnimation("left")}
-          >
-            <div className="flex items-center min-h-screen">
-              <div className="editortabs-container">
-                {EditorTabs.map((tab) => (
-                  <Tab
-                    key={tab.name}
-                    tab={tab}
-                    handleClick={() => {
-                      setActiveEditorTab(tab.name);
-                    }}
-                  />
-                ))}
-                {generateTabContent()}
-              </div>
-            </div>
-          </motion.div>
 
-          <motion.div
-            className="filtertabs-container"
-            {...slideAnimation("up")}
-          >
-            {FilterTabs.map((tab) => (
-              <Tab
-                key={tab.name}
-                tab={tab}
-                isFilterTab
-                isActiveTab={activeFilterTab[tab.name]}
-                handleClick={() => handleActiveFilterTab(tab.name)}
-              />
-            ))}
+        <SignedIn>
+          <motion.div className="absolute top-0 right-0 z-0 m-24">
+            <button className="rounded-button" onClick={handleShare}>
+              Share
+            </button>
           </motion.div>
-        </AnimatePresence>
+        </SignedIn>
+
+        <motion.div
+          key="custom"
+          className="absolute top-0 left-0 z-10"
+          {...slideAnimation("left")}
+        >
+          <div className="flex items-center min-h-screen">
+            <div className="editortabs-container">
+              {EditorTabs.map((tab) => (
+                <Tab
+                  key={tab.name}
+                  tab={tab}
+                  handleClick={() => {
+                    setActiveEditorTab(tab.name);
+                  }}
+                />
+              ))}
+              {generateTabContent()}
+            </div>
+          </div>
+        </motion.div>
+
+        <motion.div className="filtertabs-container" {...slideAnimation("up")}>
+          {FilterTabs.map((tab) => (
+            <Tab
+              key={tab.name}
+              tab={tab}
+              isFilterTab
+              isActiveTab={
+                tab.name === "logoImage" ? isLogoActive : isFullActive
+              }
+              handleClick={() => handleActiveFilterTab(tab.name as IDecalType)}
+            />
+          ))}
+        </motion.div>
       </div>
-      <div></div>
+      <ToastContainer closeOnClick />
     </>
   );
 };
