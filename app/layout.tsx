@@ -18,12 +18,12 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ variables: { colorPrimary: "#F50056" } }}>
       <html lang="en">
-        <AppThemeProvider>
-          <body className={inter.className}>
+        <body className={inter.className}>
+          <AppThemeProvider>
             <Navbar />
             <main>{children}</main>
-          </body>
-        </AppThemeProvider>
+          </AppThemeProvider>
+        </body>
       </html>
     </ClerkProvider>
   );
