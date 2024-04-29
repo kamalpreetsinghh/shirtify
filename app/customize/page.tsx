@@ -14,6 +14,7 @@ import { ICustomization, IDecalType } from "@/lib/types";
 import { createCustomization } from "@/lib/actions/customize.action";
 import { ToastContainer } from "react-toastify";
 import { SignedIn, UserProfile } from "@clerk/nextjs";
+import { pacifico } from "../fonts";
 
 const CustomizePage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -80,8 +81,18 @@ const CustomizePage = () => {
         <CanvasModel className="flex flex-1 w-full h-full" />
 
         <SignedIn>
-          <motion.div className="absolute top-0 right-0 z-0 m-24">
-            <button className="rounded-button" onClick={handleShare}>
+          <motion.div
+            className="absolute top-0 right-0 z-0 mr-24 h-[100vh] flex items-center"
+            whileHover={{ scale: 1.1 }}
+            animate={{
+              y: [0, -15, 0],
+              transition: { repeat: Infinity, duration: 1.5 },
+            }}
+          >
+            <button
+              className={`${pacifico.className} text-primary font-extrabold text-3xl`}
+              onClick={handleShare}
+            >
               Share
             </button>
           </motion.div>

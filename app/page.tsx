@@ -9,6 +9,7 @@ import {
 } from "@/lib/motion";
 import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
+import { pacifico } from "./fonts";
 
 export default function Home() {
   return (
@@ -41,9 +42,20 @@ export default function Home() {
                 <strong>Wear Innovation, Wear Exclusivity</strong>
               </p>
               <div className="w-full flex xl:justify-start justify-center">
-                <Link href="/customize" className="rounded-button">
-                  Customize it
-                </Link>
+                <motion.div
+                  whileHover={{ scale: 1.1 }}
+                  animate={{
+                    y: [0, -15, 0],
+                    transition: { repeat: Infinity, duration: 1.5 },
+                  }}
+                >
+                  <Link
+                    href="/customize"
+                    className={`${pacifico.className} text-primary font-extrabold text-3xl`}
+                  >
+                    Customize it
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           </motion.div>

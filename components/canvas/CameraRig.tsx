@@ -33,7 +33,7 @@ const CameraRig = ({
     if (group.current && group.current.rotation) {
       easing.dampE(
         group.current?.rotation,
-        [state.pointer.y / 5, -state.pointer.x / 3, 0],
+        [state.pointer.y / 8, -state.pointer.x / 4, 0],
         0.25,
         delta
       );
