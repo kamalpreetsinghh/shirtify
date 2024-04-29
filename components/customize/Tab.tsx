@@ -4,6 +4,7 @@ import { ITab } from "@/lib/types";
 import state from "@/store";
 import Image from "next/image";
 import { useSnapshot } from "valtio";
+import { motion } from "framer-motion";
 
 const Tab = ({
   tab,
@@ -21,7 +22,8 @@ const Tab = ({
       : { backgroundColor: "transparent", opacity: 1 };
 
   return (
-    <div
+    <motion.div
+      whileHover={{ scale: 1.2 }}
       key={tab.name}
       className={`tab-btn ${
         isFilterTab ? "rounded-full glassmorphism" : "rounded-4"
@@ -36,7 +38,7 @@ const Tab = ({
         height={40}
         style={{ objectFit: "cover" }}
       />
-    </div>
+    </motion.div>
   );
 };
 
