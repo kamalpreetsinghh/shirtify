@@ -13,13 +13,10 @@ export const createUser = async ({
     INSERT INTO users (id, first_name, last_name, avatar, bio) VALUES 
     (${id}, ${firstName}, ${lastName}, ${avatar}, ${bio});
 `;
-    console.log(createdUser);
   } catch (error) {
     console.log(error);
     return {
       message: "Database Error: Failed to Create User.",
     };
   }
-
-  console.log(`User Created`);
 };

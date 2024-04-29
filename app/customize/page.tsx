@@ -13,7 +13,7 @@ import CanvasModel from "@/components/canvas/CanvasModel";
 import { ICustomization, IDecalType } from "@/lib/types";
 import { createCustomization } from "@/lib/actions/customize.action";
 import { ToastContainer } from "react-toastify";
-import { SignedIn, useAuth, useUser } from "@clerk/nextjs";
+import { SignedIn, useAuth } from "@clerk/nextjs";
 import { pacifico } from "../fonts";
 
 const CustomizePage = () => {
@@ -21,6 +21,7 @@ const CustomizePage = () => {
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [isLogoActive, setIsLogoActive] = useState(state.isLogoImage);
   const [isFullActive, setIsFullActive] = useState(state.isFullImage);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { userId, isSignedIn } = useAuth();
 
@@ -77,7 +78,15 @@ const CustomizePage = () => {
         color: state.color,
       };
 
-      const result = await createCustomization(customization);
+      setIsSubmitting(true);
+
+      try {
+        const result = await createCustomization(customization);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsSubmitting(false);
+      }
     }
   };
 
@@ -87,21 +96,30 @@ const CustomizePage = () => {
         <CanvasModel className="flex flex-1 w-full h-full" />
 
         <SignedIn>
-          <motion.div
-            className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[85vh] flex items-center"
-            whileHover={{ scale: 1.1 }}
-            animate={{
-              y: [0, -15, 0],
-              transition: { repeat: Infinity, duration: 1.5 },
-            }}
-          >
-            <button
-              className={`${pacifico.className} text-primary font-extrabold text-3xl`}
-              onClick={handleShare}
+          {!isSubmitting ? (
+            <motion.div
+              className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[85vh] flex items-center"
+              whileHover={{ scale: 1.1 }}
+              animate={{
+                y: [0, -15, 0],
+                transition: { repeat: Infinity, duration: 1.5 },
+              }}
             >
-              Share
-            </button>
-          </motion.div>
+              <button
+                className={`${pacifico.className} text-primary font-extrabold text-3xl`}
+                onClick={handleShare}
+              >
+                Share
+              </button>
+            </motion.div>
+          ) : (
+            <div className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[80vh] flex items-center">
+              <div className="half-circle-spinner">
+                <div className="circle circle-1"></div>
+                <div className="circle circle-2"></div>
+              </div>
+            </div>
+          )}
         </SignedIn>
 
         <motion.div

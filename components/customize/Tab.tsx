@@ -14,8 +14,6 @@ const Tab = ({
 }: ITab) => {
   const snap = useSnapshot(state);
 
-  console.log(tab);
-
   const activeStyles =
     isFilterTab && isActiveTab
       ? { backgroundColor: snap.color, opacity: 0.5 }
