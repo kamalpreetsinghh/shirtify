@@ -21,7 +21,7 @@ export default function Home() {
         className="lg:w-2/5 w-full xl:py-16 flex flex-1 justify-center items-center"
         {...headContainerAnimation}
       >
-        <motion.div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-10">
           <motion.div {...headTextAnimation}>
             <h1
               className="xl:text-[10rem] text-[4rem] xl:leading-[11rem] leading-[7rem] 
@@ -57,11 +57,17 @@ export default function Home() {
               </motion.div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </motion.div>
-      <motion.div className="lg:w-3/5 w-full">
-        <CanvasModel className="flex flex-1" />
-      </motion.div>
+      <div className="lg:w-3/5 w-full flex flex-col justify-center items-center gap-6">
+        <CanvasModel />
+        <Link
+          href="/customizations"
+          className={`${pacifico.className} text-primary font-extrabold text-3xl`}
+        >
+          Customizations
+        </Link>
+      </div>
     </motion.section>
   );
 }

@@ -6,12 +6,12 @@ import Backdrop from "./Backdrop";
 import CameraRig from "./CameraRig";
 import { Suspense } from "react";
 
-const CanvasModel = ({ className }: { className: string }) => {
+const CanvasModel = () => {
   return (
     <Canvas
       camera={{ position: [0, 0, 0], fov: 25 }}
       gl={{ preserveDrawingBuffer: true }}
-      className={`${className} transition-all ease-in background-color`}
+      className="transition-all ease-in background-color"
     >
       <ambientLight intensity={0.5} />
       <Environment preset="city" />
