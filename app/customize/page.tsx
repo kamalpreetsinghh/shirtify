@@ -82,7 +82,7 @@ const CustomizePage = () => {
 
         <SignedIn>
           <motion.div
-            className="absolute top-0 right-0 z-0 mr-24 h-[100vh] flex items-center"
+            className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[85vh] flex items-center"
             whileHover={{ scale: 1.1 }}
             animate={{
               y: [0, -15, 0],
