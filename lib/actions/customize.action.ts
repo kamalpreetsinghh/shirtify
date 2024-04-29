@@ -3,7 +3,7 @@
 import { v2 as cloudinary } from "cloudinary";
 import { ICustomization } from "../types";
 import { isBase64 } from "../utils";
-import { db, sql } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 
 export const createCustomization = async ({
   userId,
