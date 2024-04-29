@@ -13,7 +13,7 @@ import CanvasModel from "@/components/canvas/CanvasModel";
 import { ICustomization, IDecalType } from "@/lib/types";
 import { createCustomization } from "@/lib/actions/customize.action";
 import { ToastContainer } from "react-toastify";
-import { SignedIn, UserProfile } from "@clerk/nextjs";
+import { SignedIn, useAuth, useUser } from "@clerk/nextjs";
 import { pacifico } from "../fonts";
 
 const CustomizePage = () => {
@@ -21,6 +21,8 @@ const CustomizePage = () => {
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [isLogoActive, setIsLogoActive] = useState(state.isLogoImage);
   const [isFullActive, setIsFullActive] = useState(state.isFullImage);
+
+  const { userId, isSignedIn } = useAuth();
 
   const generateTabContent = () => {
     switch (activeEditorTab) {
@@ -65,14 +67,18 @@ const CustomizePage = () => {
   };
 
   const handleShare = async () => {
-    const customization: ICustomization = {
-      userId: UserProfile.name,
-      logoImage: state.logoImage,
-      fullImage: state.fullImage,
-      color: state.color,
-    };
+    if (isSignedIn) {
+      const customization: ICustomization = {
+        userId: userId,
+        logoImage: state.logoImage,
+        fullImage: state.fullImage,
+        isLogoImage: state.isLogoImage,
+        isFullImage: state.isFullImage,
+        color: state.color,
+      };
 
-    const result = await createCustomization(customization);
+      const result = await createCustomization(customization);
+    }
   };
 
   return (

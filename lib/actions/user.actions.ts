@@ -1,4 +1,4 @@
-import { db } from "@vercel/postgres";
+import { sql } from "@vercel/postgres";
 import { User } from "../types";
 
 export const createUser = async ({
@@ -8,11 +8,16 @@ export const createUser = async ({
   avatar,
   bio,
 }: User) => {
-  const client = await db.connect();
-  const createdUser = await client.sql`
-        INSERT INTO users (id, firstName, lastName, avatar, bio) VALUES 
-        (${id}, ${firstName}, ${lastName}, ${avatar}, ${bio});
-    `;
+  try {
+    const createdUser = await sql`
+    INSERT INTO users (id, firstName, lastName, avatar, bio) VALUES 
+    (${id}, ${firstName}, ${lastName}, ${avatar}, ${bio});
+`;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create User.",
+    };
+  }
 
   console.log(`User Created`);
 };

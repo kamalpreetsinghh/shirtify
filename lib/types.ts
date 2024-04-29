@@ -29,6 +29,8 @@ export type ICustomization = {
   userId: string;
   logoImage: string;
   fullImage: string;
+  isLogoImage: boolean;
+  isFullImage: boolean;
   color: string;
 };
 

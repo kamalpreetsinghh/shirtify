@@ -53,7 +53,7 @@ export default function Home() {
                     href="/customize"
                     className={`${pacifico.className} text-primary font-extrabold text-3xl`}
                   >
-                    Customize it
+                    Create your style
                   </Link>
                 </motion.div>
               </div>
