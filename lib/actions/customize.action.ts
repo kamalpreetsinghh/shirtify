@@ -4,9 +4,11 @@ import { v2 as cloudinary } from "cloudinary";
 import { ICustomization } from "../types";
 import { isBase64 } from "../utils";
 import { sql } from "@vercel/postgres";
+import { unstable_noStore as noStore } from "next/cache";
 
 const ITEMS_PER_PAGE = 9;
 export const getCustomizations = async (pageNumber: number) => {
+  noStore();
   const offset = (pageNumber - 1) * ITEMS_PER_PAGE;
   try {
     const customizations = await sql`

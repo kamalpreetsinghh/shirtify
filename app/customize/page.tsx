@@ -8,13 +8,13 @@ import FilePicker from "@/components/customize/FilePicker";
 import { slideAnimation } from "@/lib/motion";
 import Tab from "@/components/customize/Tab";
 import { EditorTabs, FilterTabs } from "@/lib/constants";
-import { reader } from "@/lib/utils";
+import { isBase64, reader } from "@/lib/utils";
 import CanvasModel from "@/components/canvas/CanvasModel";
 import { ICustomization, IDecalType } from "@/lib/types";
 import { createCustomization } from "@/lib/actions/customize.action";
-import { ToastContainer } from "react-toastify";
 import { SignedIn, useAuth } from "@clerk/nextjs";
 import { pacifico } from "../fonts";
+import { Toaster, toast } from "sonner";
 
 const CustomizePage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -22,6 +22,7 @@ const CustomizePage = () => {
   const [isLogoActive, setIsLogoActive] = useState(state.isLogoImage);
   const [isFullActive, setIsFullActive] = useState(state.isFullImage);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isShared, setIsShared] = useState(false);
 
   const { userId, isSignedIn } = useAuth();
 
@@ -69,23 +70,28 @@ const CustomizePage = () => {
 
   const handleShare = async () => {
     if (isSignedIn) {
-      const customization: ICustomization = {
-        userId: userId,
-        logoImage: state.logoImage,
-        fullImage: state.fullImage,
-        isLogoImage: state.isLogoImage,
-        isFullImage: state.isFullImage,
-        color: state.color,
-      };
+      if (isBase64(state.logoImage) || isBase64(state.fullImage)) {
+        const customization: ICustomization = {
+          userId: userId,
+          logoImage: state.logoImage,
+          fullImage: state.fullImage,
+          isLogoImage: state.isLogoImage,
+          isFullImage: state.isFullImage,
+          color: state.color,
+        };
 
-      setIsSubmitting(true);
+        setIsSubmitting(true);
 
-      try {
-        const result = await createCustomization(customization);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsSubmitting(false);
+        try {
+          const result = await createCustomization(customization);
+          setIsShared(true);
+        } catch (error) {
+          console.log(error);
+        } finally {
+          setIsSubmitting(false);
+        }
+      } else {
+        toast("Please select an image for your design.");
       }
     }
   };
@@ -120,6 +126,8 @@ const CustomizePage = () => {
               </div>
             </div>
           )}
+
+          {isShared && <></>}
         </SignedIn>
 
         <motion.div
@@ -157,7 +165,7 @@ const CustomizePage = () => {
           ))}
         </motion.div>
       </div>
-      <ToastContainer closeOnClick />
+      <Toaster />
     </>
   );
 };
