@@ -5,8 +5,17 @@ import Shirt from "./Shirt";
 import Backdrop from "./Backdrop";
 import CameraRig from "./CameraRig";
 import { Suspense } from "react";
+import { IThreeDModelState } from "@/lib/types";
 
-const CanvasModel = () => {
+type CanvasModelProps = {
+  isCustomizable?: boolean;
+  threeDModelState?: IThreeDModelState | null;
+};
+
+const CanvasModel = ({
+  isCustomizable = false,
+  threeDModelState = null,
+}: CanvasModelProps) => {
   return (
     <Canvas
       camera={{ position: [0, 0, 0], fov: 25 }}
@@ -19,7 +28,10 @@ const CanvasModel = () => {
         <CameraRig>
           <Backdrop />
           <Center>
-            <Shirt />
+            <Shirt
+              isCustomizable={isCustomizable}
+              threeDModelState={threeDModelState}
+            />
           </Center>
         </CameraRig>
       </Suspense>

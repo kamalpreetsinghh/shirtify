@@ -93,7 +93,7 @@ const CustomizePage = () => {
   return (
     <>
       <div className="flex flex-1 w-[100vw] h-[80vh]">
-        <CanvasModel />
+        <CanvasModel isCustomizable={true} />
 
         <SignedIn>
           {!isSubmitting ? (

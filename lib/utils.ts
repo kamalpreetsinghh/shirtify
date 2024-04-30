@@ -27,3 +27,22 @@ export const fileToBase64 = (file: File): Promise<string> => {
 export const isBase64 = (image: string) => {
   return image.startsWith("data:image");
 };
+
+export const urlToBase64 = async (url: string): Promise<string> => {
+  const response = await fetch(url);
+  const blob = await response.blob();
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      if (typeof reader.result === "string") {
+        resolve(reader.result);
+      } else {
+        reject("Failed to convert the image to base64.");
+      }
+    };
+    reader.onerror = () => {
+      reject("Failed to read the image file.");
+    };
+    reader.readAsDataURL(blob);
+  });
+};

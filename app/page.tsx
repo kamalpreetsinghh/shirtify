@@ -60,7 +60,7 @@ export default function Home() {
         </div>
       </motion.div>
       <div className="lg:w-3/5 w-full flex flex-col justify-center items-center gap-6">
-        <CanvasModel />
+        <CanvasModel isCustomizable={true} />
         <Link
           href="/customizations"
           className={`${pacifico.className} text-primary font-extrabold text-3xl`}

@@ -5,6 +5,35 @@ import { ICustomization } from "../types";
 import { isBase64 } from "../utils";
 import { sql } from "@vercel/postgres";
 
+const ITEMS_PER_PAGE = 9;
+export const getCustomizations = async (pageNumber: number) => {
+  const offset = (pageNumber - 1) * ITEMS_PER_PAGE;
+  try {
+    const customizations = await sql`
+    SELECT customizations.id AS customization_id,
+    customizations.logo_image,
+    customizations.full_image,
+    customizations.is_logo_image,
+    customizations.is_full_image,
+    customizations.color,
+    users.id AS user_id,
+    users.first_name,
+    users.last_name,
+    users.avatar,
+    users.bio
+    FROM customizations  
+    JOIN users ON customizations.user_id = users.id
+    LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}
+  `;
+
+    return customizations.rows;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Create Customization.",
+    };
+  }
+};
+
 export const createCustomization = async ({
   userId,
   logoImage,

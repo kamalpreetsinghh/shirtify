@@ -1,6 +1,7 @@
+import { IThreeDModelState } from "@/lib/types";
 import { proxy } from "valtio";
 
-const state = proxy({
+const state: IThreeDModelState = proxy({
   color: "#C10048",
   isLogoImage: true,
   isFullImage: false,
