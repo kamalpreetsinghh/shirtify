@@ -37,6 +37,10 @@ body {
   }
 }
 
+.text-hover:hover {
+  color: var(--text-color);
+}
+
 .text-grey-color {
   color: var(--text-grey-color);
 }

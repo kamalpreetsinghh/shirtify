@@ -1,19 +1,45 @@
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+"use client";
+
+import {
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+  useAuth,
+} from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitch from "./ThemeSwitch";
 
 const Navbar = () => {
+  const { userId } = useAuth();
+
   return (
     <nav className="flex justify-between items-center w-full py-4 gap-4 px-6 sm:px-24">
-      <Link href={"/"}>
-        <Image
-          src={"/assets/images/logo.png"}
-          alt="logo"
-          width={100}
-          height={35}
-        />
-      </Link>
+      <div className="flex gap-8 items-center">
+        <Link href={"/"} className="mr-4">
+          <Image
+            src={"/assets/images/logo.png"}
+            alt="logo"
+            width={100}
+            height={35}
+          />
+        </Link>
+        <Link
+          href="/customizations"
+          className="text-primary font-semibold text-xl text-hover"
+        >
+          Explore Designs
+        </Link>
+        <SignedIn>
+          <Link
+            href={`/profile/${userId}`}
+            className="text-primary font-semibold text-xl text-hover"
+          >
+            My Designs
+          </Link>
+        </SignedIn>
+      </div>
 
       <div className="flex justify-center items-center gap-4 sm:gap-6">
         <ThemeSwitch />

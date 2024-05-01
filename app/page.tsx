@@ -52,7 +52,7 @@ export default function Home() {
                   href="/customize"
                   className={`${pacifico.className} text-primary font-extrabold text-3xl`}
                 >
-                  Create your style
+                  Create my style
                 </Link>
               </motion.div>
             </div>
@@ -61,12 +61,6 @@ export default function Home() {
       </motion.div>
       <div className="lg:w-3/5 w-full flex flex-col justify-center items-center gap-6">
         <CanvasModel isCustomizable={true} />
-        <Link
-          href="/customizations"
-          className={`${pacifico.className} text-primary font-extrabold text-3xl`}
-        >
-          Customizations
-        </Link>
       </div>
     </motion.section>
   );

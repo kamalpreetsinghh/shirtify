@@ -17,15 +17,15 @@ const Shirt = ({
   isCustomizable = false,
   threeDModelState = null,
 }: ShirtProps) => {
+  const appState = useSnapshot(state);
+
   const snap =
-    !isCustomizable && threeDModelState ? threeDModelState : useSnapshot(state);
+    !isCustomizable && threeDModelState ? threeDModelState : appState;
   const { nodes, materials } = useGLTF("/assets/threedmodels/shirt_baked.glb");
   const object3dEventMap = nodes.T_Shirt_male as any;
 
   const logoImage = useTexture(snap.logoImage);
   const fullImage = useTexture(snap.fullImage);
-
-  console.log(snap.logoImage);
 
   useFrame((state, delta) => {
     const lambertMaterial = materials.lambert1 as any;
