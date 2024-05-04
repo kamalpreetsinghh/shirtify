@@ -1,5 +1,5 @@
 import Image from "next/image";
-import UserNameIcon from "./UserNameIcon";
+import UserNameIcon from "./customize/UserNameIcon";
 
 type CardUserProps = {
   image?: string;

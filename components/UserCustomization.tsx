@@ -2,10 +2,14 @@
 
 import { IThreeDModelState } from "@/lib/types";
 import { useEffect, useState } from "react";
-import CanvasModel from "./canvas/CanvasModel";
 import { urlToBase64 } from "@/lib/utils";
-import state from "@/store";
 import { Loader } from "@react-three/drei";
+import state from "@/store";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/canvas/Scene"), {
+  ssr: false,
+});
 
 const UserCustomization = ({
   threeDModelState,
@@ -53,9 +57,10 @@ const UserCustomization = ({
 
   return (
     <div className="flex flex-1 w-[100vh] h-[80vh] justify-center items-center">
-      <CanvasModel
+      <Scene
         isCustomizable={false}
         threeDModelState={threeDModelState2}
+        showTexture={true}
       />
     </div>
   );

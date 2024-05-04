@@ -4,20 +4,24 @@ import { easing } from "maath";
 import { useSnapshot } from "valtio";
 import { useFrame } from "@react-three/fiber";
 import { Decal, useGLTF, useTexture } from "@react-three/drei";
-import state from "@/store";
-import { Color } from "three";
+import { Color, Group, MeshBasicMaterial, MeshStandardMaterial } from "three";
 import { IThreeDModelState } from "@/lib/types";
+import { useRef } from "react";
+import state from "@/store";
 
-type ShirtProps = {
+type ModalProps = {
   isCustomizable: boolean;
   threeDModelState: IThreeDModelState | null;
+  showTexture?: boolean;
 };
 
-const Shirt = ({
+const Modal = ({
   isCustomizable = false,
   threeDModelState = null,
-}: ShirtProps) => {
+  showTexture = false,
+}: ModalProps) => {
   const appState = useSnapshot(state);
+  const group = useRef<Group>(null);
 
   const snap =
     !isCustomizable && threeDModelState ? threeDModelState : appState;
@@ -27,20 +31,23 @@ const Shirt = ({
   const logoImage = useTexture(snap.logoImage);
   const fullImage = useTexture(snap.fullImage);
 
-  useFrame((state, delta) => {
-    const lambertMaterial = materials.lambert1 as any;
-    easing.dampC(lambertMaterial.color as Color, snap.color, 0.25, delta);
+  const material = new MeshBasicMaterial({ color: snap.color });
+
+  useFrame((_state, delta) => {
+    if (showTexture) {
+      const lambertMaterial = materials.lambert1 as MeshStandardMaterial;
+      easing.dampC(lambertMaterial.color as Color, snap.color, 0.25, delta);
+    }
   });
 
-  const stateString = JSON.stringify(snap);
-
   return (
-    <group key={stateString}>
+    <group ref={group}>
       <mesh
         geometry={object3dEventMap.geometry}
-        material={materials.lambert1}
+        material={showTexture ? materials.lambert1 : material}
         material-roughness={1}
         dispose={null}
+        position={[0, 0, 0]}
       >
         {snap.isFullImage && (
           <Decal
@@ -65,4 +72,4 @@ const Shirt = ({
   );
 };
 
-export default Shirt;
+export default Modal;

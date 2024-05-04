@@ -1,6 +1,5 @@
 "use client";
 
-import CanvasModel from "@/components/canvas/CanvasModel";
 import {
   headContainerAnimation,
   headContentAnimation,
@@ -8,8 +7,13 @@ import {
   slideAnimation,
 } from "@/lib/motion";
 import { motion } from "framer-motion";
-import Link from "next/link";
 import { pacifico } from "./fonts";
+import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/canvas/Scene"), {
+  ssr: false,
+});
 
 export default function Home() {
   return (
@@ -60,7 +64,7 @@ export default function Home() {
         </div>
       </motion.div>
       <div className="lg:w-3/5 w-full flex flex-col justify-center items-center gap-6">
-        <CanvasModel isCustomizable={true} />
+        <Scene isCustomizable={true} showTexture={true} />
       </div>
     </motion.section>
   );

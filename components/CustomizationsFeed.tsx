@@ -1,12 +1,16 @@
 "use client";
 
 import { ICustomizationDetails, IThreeDModelState } from "@/lib/types";
-import CardUser from "./customize/CardUser";
-import CanvasModel from "./canvas/CanvasModel";
-import state from "@/store";
 import { urlToBase64 } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import CardUser from "./CardUser";
+import state from "@/store";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/canvas/Scene"), {
+  ssr: false,
+});
 
 const CustomizationsFeed = ({
   customizationDetails,
@@ -16,7 +20,7 @@ const CustomizationsFeed = ({
   isProfile?: boolean;
 }) => {
   return (
-    <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-16">
+    <div className="pt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
       {customizationDetails.map((customization) => (
         <CustomizationCard
           key={customization.customizationId}
@@ -77,18 +81,17 @@ const CustomizationCard = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-6">
+    <div className="flex flex-col justify-center items-center gap-y-2 flex-1">
       {!isProfile && (
-        <CardUser
-          firstName={customizationDetail.firstName}
-          lastName={customizationDetail.lastName}
-        />
+        <Link href={`/profile/${customizationDetail.userId}`}>
+          <CardUser
+            firstName={customizationDetail.firstName}
+            lastName={customizationDetail.lastName}
+          />
+        </Link>
       )}
       <Link href={`/customization/${customizationDetail.customizationId}`}>
-        <CanvasModel
-          isCustomizable={false}
-          threeDModelState={threeDModelState}
-        />
+        <Scene isCustomizable={false} threeDModelState={threeDModelState} />
       </Link>
     </div>
   );

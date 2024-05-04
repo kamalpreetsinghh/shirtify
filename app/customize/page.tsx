@@ -2,19 +2,23 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import state from "@/store";
-import ColorPicker from "@/components/customize/ColorPicker";
-import FilePicker from "@/components/customize/FilePicker";
 import { slideAnimation } from "@/lib/motion";
-import Tab from "@/components/customize/Tab";
 import { EditorTabs, FilterTabs } from "@/lib/constants";
 import { isBase64, reader } from "@/lib/utils";
-import CanvasModel from "@/components/canvas/CanvasModel";
 import { ICustomization, IDecalType } from "@/lib/types";
 import { createCustomization } from "@/lib/actions/customize.action";
 import { SignedIn, useAuth } from "@clerk/nextjs";
 import { pacifico } from "../fonts";
 import { Toaster, toast } from "sonner";
+import Tab from "@/components/customize/Tab";
+import state from "@/store";
+import ColorPicker from "@/components/customize/ColorPicker";
+import FilePicker from "@/components/customize/FilePicker";
+import dynamic from "next/dynamic";
+
+const Scene = dynamic(() => import("@/components/canvas/Scene"), {
+  ssr: false,
+});
 
 const CustomizePage = () => {
   const [file, setFile] = useState<File | null>(null);
@@ -99,7 +103,7 @@ const CustomizePage = () => {
   return (
     <>
       <div className="flex flex-1 w-[100vw] h-[80vh]">
-        <CanvasModel isCustomizable={true} />
+        <Scene isCustomizable={true} showTexture={true} />
 
         <SignedIn>
           {!isSubmitting ? (
