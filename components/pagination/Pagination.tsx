@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useSearchParams } from "next/navigation";
-import PaginationArrow from "./PaginationArror";
+import PaginationArrow from "./PaginationArrow";
 import PaginationNumber from "./PaginationNumber";
 import { generatePagination } from "@/lib/utils";
 

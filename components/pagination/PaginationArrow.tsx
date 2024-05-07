@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import Image from "next/image";
 import Link from "next/link";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
 const PaginationArrow = ({
   href,
@@ -21,22 +22,7 @@ const PaginationArrow = ({
     }
   );
 
-  const icon =
-    direction === "left" ? (
-      <Image
-        src={"/assets/images/left-icon.png"}
-        alt="logo"
-        width={20}
-        height={20}
-      />
-    ) : (
-      <Image
-        src={"/assets/images/right-icon.png"}
-        alt="logo"
-        width={20}
-        height={20}
-      />
-    );
+  const icon = direction === "left" ? <FaAngleLeft /> : <FaAngleRight />;
 
   return isDisabled ? (
     <div className={className}>{icon}</div>

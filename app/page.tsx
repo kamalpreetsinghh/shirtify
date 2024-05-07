@@ -25,14 +25,14 @@ export default function Home() {
         className="lg:w-2/5 w-full xl:py-16 flex flex-1 justify-center items-center"
         {...headContainerAnimation}
       >
-        <div className="flex flex-col gap-10">
+        <div className="flex flex-col gap-6 xl:gap-10">
           <motion.div {...headTextAnimation}>
             <h1
-              className="xl:text-[10rem] text-[4rem] xl:leading-[11rem] leading-[7rem] 
+              className="xl:text-[8rem] text-[3rem] xl:leading-[11rem] leading-[6rem] 
             font-black md:text-start text-center"
             >
               LET&apos;S
-              <br className="hidden xl:block" /> DO IT.
+              <br className="hidden xl:block" /> DESIGN.
             </h1>
           </motion.div>
           <motion.div

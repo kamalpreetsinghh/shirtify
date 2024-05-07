@@ -46,7 +46,7 @@ body {
 }
 
 .root-container {
-  @apply pt-16 lg:mt-0;
+  @apply pt-16 lg:pt-0;
 }
 
 .text-hover:hover {
