@@ -15,7 +15,7 @@ const Navbar = () => {
   const { userId } = useAuth();
 
   return (
-    <nav className="flex justify-between items-center w-full py-4 gap-4 px-6 sm:px-24">
+    <nav className="navbar">
       <div className="flex gap-8 items-center">
         <Link href={"/"} className="mr-4">
           <Image

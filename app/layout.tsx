@@ -4,6 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import Navbar from "@/components/Navbar";
 import AppThemeProvider from "@/components/AppThemeProvider";
 import { inter } from "./fonts";
+import MobileNav from "@/components/MobileNav";
 
 export const metadata: Metadata = {
   title: "Shirtify",
@@ -21,7 +22,8 @@ export default function RootLayout({
         <body className={inter.className}>
           <AppThemeProvider>
             <Navbar />
-            <main>{children}</main>
+            <MobileNav />
+            <main className="root-container">{children}</main>
           </AppThemeProvider>
         </body>
       </html>

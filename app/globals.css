@@ -8,22 +8,30 @@
   --text-color-light: rgb(0, 0, 0);
   --background-color-light: rgb(255, 255, 255);
   --text-grey-color-light: rgb(86, 86, 86);
+  --divider-color-light: rgb(235 234 234);
+  --sheet-background-color-light: rgb(255, 198, 218);
 
   --text-color-dark: rgb(255, 255, 255);
   --background-color-dark: rgb(0, 0, 0);
   --text-grey-color-dark: rgb(156 163 175);
+  --divider-color-dark: rgb(30, 30, 30);
+  --sheet-background-color-dark: rgb(41, 0, 14);
 }
 
 html.dark {
   --text-color: var(--text-color-dark);
   --background-color: var(--background-color-dark);
   --text-grey-color: var(--text-grey-color-dark);
+  --divider-color: var(--divider-color-dark);
+  --sheet-background-color: var(--sheet-background-color-dark);
 }
 
 html.light {
   --text-color: var(--text-color-light);
   --background-color: var(--background-color-light);
   --text-grey-color: var(--text-grey-color-light);
+  --divider-color: var(--divider-color-light);
+  --sheet-background-color: var(--sheet-background-color-light);
 }
 
 body {
@@ -35,6 +43,10 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+.root-container {
+  @apply pt-16 lg:mt-0;
 }
 
 .text-hover:hover {
@@ -58,6 +70,27 @@ body {
 .rounded-button:hover {
   color: var(--background-color);
   background-color: var(--text-color);
+}
+
+.navbar {
+  @apply hidden lg:flex justify-between items-center w-full py-4 gap-4 px-6 sm:px-24;
+  border-bottom: solid 1px;
+  border-color: var(--divider-color);
+}
+
+.mobile-nav {
+  @apply flex justify-between items-center fixed h-16 w-full p-5 lg:hidden;
+  border-bottom: solid 1px;
+  border-color: var(--divider-color);
+  background-color: var(--background-color);
+}
+
+.sheet-background-color {
+  background-color: var(--sheet-background-color);
+}
+
+.header-nav_elements {
+  @apply mt-8 flex w-full flex-col items-start gap-5;
 }
 
 .editortabs-container {

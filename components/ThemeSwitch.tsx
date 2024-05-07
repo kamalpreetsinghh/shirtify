@@ -2,7 +2,8 @@
 
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { FaSun, FaMoon } from "react-icons/fa6";
+import { FaMoon } from "react-icons/fa6";
+import { MdLightMode } from "react-icons/md";
 
 const ThemeSwitch = () => {
   const { theme, setTheme } = useTheme();
@@ -23,7 +24,7 @@ const ThemeSwitch = () => {
       {theme === "dark" ? (
         <FaMoon className="w-6 h-6 text-primary" />
       ) : (
-        <FaSun className="w-6 h-6 text-primary" />
+        <MdLightMode className="w-6 h-6 text-primary" />
       )}
     </button>
   );
