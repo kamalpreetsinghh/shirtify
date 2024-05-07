@@ -6,7 +6,7 @@ import { isBase64 } from "../utils";
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
 
-const ITEMS_PER_PAGE = 9;
+const ITEMS_PER_PAGE = 6;
 
 export const getCustomizations = async (pageNumber: number) => {
   noStore();
@@ -119,6 +119,37 @@ export const getCustomizationByID = async (customizationID: string) => {
     return {
       message: "Database Error: Failed to Retrieve Customization By ID.",
     };
+  }
+};
+
+export const getCustomizationPages = async () => {
+  noStore();
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM customizations
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of customizations.");
+  }
+};
+
+export const getUserCustomizationsPages = async (userId: string) => {
+  noStore();
+  try {
+    const count = await sql`SELECT COUNT(*)
+    FROM customizations
+    WHERE customizations.user_id = ${userId}
+  `;
+
+    const totalPages = Math.ceil(Number(count.rows[0].count) / ITEMS_PER_PAGE);
+    return totalPages;
+  } catch (error) {
+    console.error("Database Error:", error);
+    throw new Error("Failed to fetch total number of user customizations.");
   }
 };
 
