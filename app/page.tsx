@@ -18,7 +18,7 @@ const Scene = dynamic(() => import("@/components/canvas/Scene"), {
 export default function Home() {
   return (
     <motion.section
-      className="w-full flex lg:flex-row flex-col xl:py-16 xl:px-24 sm:p-8 p-6 max-xl:gap-7"
+      className="w-full flex flex-col lg:flex-row xl:py-16 xl:px-24 sm:p-8 p-6"
       {...slideAnimation("left")}
     >
       <motion.div

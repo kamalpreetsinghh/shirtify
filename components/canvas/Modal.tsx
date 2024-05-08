@@ -25,7 +25,7 @@ const Modal = ({
 
   const snap =
     !isCustomizable && threeDModelState ? threeDModelState : appState;
-  const { nodes, materials } = useGLTF("/assets/threedmodels/shirt_baked.glb");
+  const { nodes, materials } = useGLTF("/assets/threedmodels/shirt.glb");
   const object3dEventMap = nodes.T_Shirt_male as any;
 
   const logoImage = useTexture(snap.logoImage);

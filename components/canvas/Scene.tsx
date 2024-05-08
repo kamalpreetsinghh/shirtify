@@ -19,7 +19,7 @@ const Scene = ({
 }: SceneProps) => {
   return (
     <Canvas
-      camera={{ position: [0, 0, 0], fov: 22 }}
+      camera={{ position: [0, 0, 10], fov: 20 }}
       gl={{ antialias: true }}
       dpr={[1, 1.5]}
       className="transition-all ease-in background-color"
@@ -34,14 +34,16 @@ const Scene = ({
       />
       <pointLight position={[-10, -10, -10]} intensity={Math.PI} />
       <Suspense fallback={null}>
-        <CameraRig>
-          <Backdrop />
-          <Modal
-            isCustomizable={isCustomizable}
-            threeDModelState={threeDModelState}
-            showTexture={showTexture}
-          />
-        </CameraRig>
+        <group position={[0, 0.05, 0]}>
+          <CameraRig>
+            <Backdrop />
+            <Modal
+              isCustomizable={isCustomizable}
+              threeDModelState={threeDModelState}
+              showTexture={showTexture}
+            />
+          </CameraRig>
+        </group>
       </Suspense>
     </Canvas>
   );
