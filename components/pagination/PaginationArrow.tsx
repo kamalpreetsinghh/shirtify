@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import Image from "next/image";
 import Link from "next/link";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 
@@ -13,7 +12,7 @@ const PaginationArrow = ({
   isDisabled?: boolean;
 }) => {
   const className = clsx(
-    "flex h-10 w-10 items-center justify-center rounded-md border",
+    "flex h-10 w-10 items-center justify-center rounded-full border border-color",
     {
       "pointer-events-none text-gray-300": isDisabled,
       "hover:bg-gray-100": !isDisabled,
