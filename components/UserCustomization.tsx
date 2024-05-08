@@ -56,7 +56,7 @@ const UserCustomization = ({
   }
 
   return (
-    <div className="flex flex-1 w-[100vh] h-[80vh] justify-center items-center">
+    <div className="w-[100vw] h-[82vh]">
       <Scene
         isCustomizable={false}
         threeDModelState={threeDModelState2}

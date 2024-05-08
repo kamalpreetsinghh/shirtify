@@ -102,7 +102,7 @@ const CustomizePage = () => {
 
   return (
     <>
-      <div className="flex flex-1 w-[100vw] h-[80vh]">
+      <div className="flex flex-1 w-[100vw] h-[82vh]">
         <Scene isCustomizable={true} showTexture={true} />
 
         <SignedIn>
