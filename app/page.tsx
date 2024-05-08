@@ -32,7 +32,7 @@ export default function Home() {
             font-black md:text-start text-center"
             >
               LET&apos;S
-              <br className="hidden xl:block" /> DESIGN.
+              <br className="hidden xl:block" /> DESIGN
             </h1>
           </motion.div>
           <motion.div

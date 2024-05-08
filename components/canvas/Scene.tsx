@@ -6,7 +6,7 @@ import Modal from "./Modal";
 import Backdrop from "./Backdrop";
 import CameraRig from "./CameraRig";
 
-type CanvasModelProps = {
+type SceneProps = {
   isCustomizable?: boolean;
   threeDModelState?: IThreeDModelState | null;
   showTexture?: boolean;
@@ -16,7 +16,7 @@ const Scene = ({
   isCustomizable = false,
   threeDModelState = null,
   showTexture = false,
-}: CanvasModelProps) => {
+}: SceneProps) => {
   return (
     <Canvas
       camera={{ position: [0, 0, 0], fov: 22 }}
