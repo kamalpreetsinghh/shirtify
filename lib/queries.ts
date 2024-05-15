@@ -13,7 +13,8 @@ const createCustomizationsTable = `CREATE TABLE IF NOT EXISTS customizations (
     full_image VARCHAR(500),
     is_logo_image BOOLEAN,
     is_full_image BOOLEAN,
-    color VARCHAR(10)
+    color VARCHAR(10),
+    FOREIGN KEY (user_id) REFERENCES users(id) 
 );`;
 
 const createUserFollowTable = `CREATE TABLE IF NOT EXISTS user_following (
