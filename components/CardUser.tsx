@@ -1,5 +1,8 @@
+"use client";
+
 import Image from "next/image";
 import UserNameIcon from "./customize/UserNameIcon";
+import { motion } from "framer-motion";
 
 type CardUserProps = {
   image?: string;
@@ -9,7 +12,10 @@ type CardUserProps = {
 
 const CardUser = ({ image, firstName, lastName }: CardUserProps) => {
   return (
-    <div className="flex items-center justify-center gap-3 cursor-pointer">
+    <motion.div
+      whileHover={{ scale: 1.1 }}
+      className="flex items-center justify-center gap-3 cursor-pointer"
+    >
       {image ? (
         <div className="flex relative">
           <Image
@@ -33,7 +39,7 @@ const CardUser = ({ image, firstName, lastName }: CardUserProps) => {
           {`${firstName} ${lastName}`}
         </h3>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

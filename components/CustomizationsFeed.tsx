@@ -7,6 +7,7 @@ import Link from "next/link";
 import CardUser from "./CardUser";
 import state from "@/store";
 import dynamic from "next/dynamic";
+import { motion } from "framer-motion";
 
 const Scene = dynamic(() => import("@/components/canvas/Scene"), {
   ssr: false,
@@ -81,7 +82,10 @@ const CustomizationCard = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-y-2 min-h-[400px] md:min-h-[300px]">
+    <motion.div
+      whileHover={{ scale: 1.1 }}
+      className="flex flex-col justify-center items-center gap-y-2 min-h-[400px] md:min-h-[300px]"
+    >
       {!isProfile && (
         <Link href={`/profile/${customizationDetail.userId}`}>
           <CardUser
@@ -97,7 +101,7 @@ const CustomizationCard = ({
       >
         <Scene isCustomizable={false} threeDModelState={threeDModelState} />
       </Link>
-    </div>
+    </motion.div>
   );
 };
 
