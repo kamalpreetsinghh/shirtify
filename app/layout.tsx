@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
+import { inter } from "./fonts";
 import Navbar from "@/components/Navbar";
 import AppThemeProvider from "@/components/AppThemeProvider";
-import { inter } from "./fonts";
 import MobileNav from "@/components/MobileNav";
+import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Shirtify",
@@ -18,7 +18,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider appearance={{ variables: { colorPrimary: "#F50056" } }}>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <AppThemeProvider>
             <Navbar />

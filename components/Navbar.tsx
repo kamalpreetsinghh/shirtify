@@ -23,6 +23,8 @@ const Navbar = () => {
             alt="logo"
             width={100}
             height={35}
+            priority={true}
+            style={{ objectFit: "cover" }}
           />
         </Link>
         <Link

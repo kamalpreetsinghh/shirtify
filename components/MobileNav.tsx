@@ -43,6 +43,8 @@ const MobileNav = () => {
                 alt="logo"
                 width={100}
                 height={35}
+                priority={true}
+                style={{ objectFit: "cover" }}
               />
 
               <ul className="header-nav_elements flex flex-col">

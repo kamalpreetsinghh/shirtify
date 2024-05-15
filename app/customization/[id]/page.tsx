@@ -11,14 +11,15 @@ const CustomizationPage = async ({
     id
   )) as ICustomizationDetails[];
 
-  const customizationDetail = customizations[0];
+  const { color, logoImage, fullImage, isLogoImage, isFullImage } =
+    customizations[0];
 
   const threeDModelState: IThreeDModelState = {
-    color: customizationDetail.color,
-    logoImage: customizationDetail.logoImage,
-    fullImage: customizationDetail.fullImage,
-    isLogoImage: customizationDetail.isLogoImage,
-    isFullImage: customizationDetail.isFullImage,
+    color,
+    logoImage,
+    fullImage,
+    isLogoImage,
+    isFullImage,
   };
 
   return <UserCustomization threeDModelState={threeDModelState} />;

@@ -11,7 +11,16 @@ const CardUser = ({ image, firstName, lastName }: CardUserProps) => {
   return (
     <div className="flex items-center justify-center gap-3 cursor-pointer">
       {image ? (
-        <div className="flex w-10 h-10 relative"></div>
+        <div className="flex relative">
+          <Image
+            src={image}
+            alt=""
+            width={40}
+            height={40}
+            style={{ objectFit: "cover" }}
+            className="rounded-full"
+          />
+        </div>
       ) : (
         <UserNameIcon
           name={firstName[0].toUpperCase()}

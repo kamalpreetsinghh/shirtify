@@ -23,8 +23,7 @@ export const getCustomizations = async (pageNumber: number) => {
     users.id AS "userId",
     users.first_name AS "firstName",
     users.last_name AS "lastName",
-    users.avatar,
-    users.bio
+    users.avatar
     FROM customizations  
     JOIN users ON customizations.user_id = users.id
     LIMIT ${ITEMS_PER_PAGE} OFFSET ${offset}

@@ -41,8 +41,6 @@ const CustomizePage = () => {
     }
   };
 
-  const handleSubmit = () => {};
-
   const handleDecals = (type: IDecalType, result: string) => {
     state[type] = result as string;
 
@@ -68,6 +66,7 @@ const CustomizePage = () => {
       reader(file).then((result) => {
         handleDecals(type, result as string);
         setActiveEditorTab("");
+        setIsShared(false);
       });
     }
   };
@@ -89,6 +88,7 @@ const CustomizePage = () => {
         try {
           const result = await createCustomization(customization);
           setIsShared(true);
+          toast("Your design is shared with the community.");
         } catch (error) {
           console.log(error);
         } finally {
@@ -107,21 +107,25 @@ const CustomizePage = () => {
 
         <SignedIn>
           {!isSubmitting ? (
-            <motion.div
-              className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[85vh] flex items-center"
-              whileHover={{ scale: 1.1 }}
-              animate={{
-                y: [0, -15, 0],
-                transition: { repeat: Infinity, duration: 1.5 },
-              }}
-            >
-              <button
-                className={`${pacifico.className} text-primary font-extrabold text-3xl`}
-                onClick={handleShare}
-              >
-                Share
-              </button>
-            </motion.div>
+            <>
+              {!isShared && (
+                <motion.div
+                  className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[85vh] flex items-center"
+                  whileHover={{ scale: 1.1 }}
+                  animate={{
+                    y: [0, -15, 0],
+                    transition: { repeat: Infinity, duration: 1.5 },
+                  }}
+                >
+                  <button
+                    className={`${pacifico.className} text-primary font-extrabold text-3xl`}
+                    onClick={handleShare}
+                  >
+                    Share
+                  </button>
+                </motion.div>
+              )}
+            </>
           ) : (
             <div className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[80vh] flex items-center">
               <div className="half-circle-spinner">
@@ -146,7 +150,11 @@ const CustomizePage = () => {
                   key={tab.name}
                   tab={tab}
                   handleClick={() => {
-                    setActiveEditorTab(tab.name);
+                    if (activeEditorTab === tab.name) {
+                      setActiveEditorTab("");
+                    } else {
+                      setActiveEditorTab(tab.name);
+                    }
                   }}
                 />
               ))}

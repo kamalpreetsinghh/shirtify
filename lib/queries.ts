@@ -16,19 +16,11 @@ const createCustomizationsTable = `CREATE TABLE IF NOT EXISTS customizations (
     color VARCHAR(10)
 );`;
 
-const selectCustomizations = `SELECT 
-customizations.id AS customization_id,
-customizations.logo_image,
-customizations.full_image,
-customizations.is_logo_image,
-customizations.is_full_image,
-customizations.color,
-users.id AS user_id,
-users.first_name,
-users.last_name,
-users.avatar,
-users.bio
-FROM customizations  
-JOIN users ON customizations.user_id = users.id
-LIMIT 9 OFFSET 1
-`;
+const createUserFollowTable = `CREATE TABLE IF NOT EXISTS user_following (
+    id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+    follower_id VARCHAR(255) NOT NULL,
+    followee_id VARCHAR(255) NOT NULL,
+    follow_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (follower_id) REFERENCES users(id),
+    FOREIGN KEY (followee_id) REFERENCES users(id)
+);`;

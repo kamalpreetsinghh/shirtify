@@ -53,6 +53,7 @@ export type ICustomizationDetails = {
   firstName: string;
   lastName: string;
   avatar: string;
+  bio?: string;
 };
 
 export type IThreeDModelState = {

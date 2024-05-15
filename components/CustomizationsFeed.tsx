@@ -20,7 +20,7 @@ const CustomizationsFeed = ({
   isProfile?: boolean;
 }) => {
   return (
-    <div className="pt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-16">
+    <div className="pt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
       {customizationDetails.map((customization) => (
         <CustomizationCard
           key={customization.customizationId}
@@ -81,16 +81,20 @@ const CustomizationCard = ({
   };
 
   return (
-    <div className="flex flex-col justify-center items-center gap-y-2 flex-1">
+    <div className="flex flex-col justify-center items-center gap-y-2 min-h-[400px] md:min-h-[300px]">
       {!isProfile && (
         <Link href={`/profile/${customizationDetail.userId}`}>
           <CardUser
+            image={customizationDetail.avatar}
             firstName={customizationDetail.firstName}
             lastName={customizationDetail.lastName}
           />
         </Link>
       )}
-      <Link href={`/customization/${customizationDetail.customizationId}`}>
+      <Link
+        className="flex h-full"
+        href={`/customization/${customizationDetail.customizationId}`}
+      >
         <Scene isCustomizable={false} threeDModelState={threeDModelState} />
       </Link>
     </div>
