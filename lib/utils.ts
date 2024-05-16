@@ -1,3 +1,5 @@
+import state from "@/store";
+
 export const reader = (file: File) =>
   new Promise((resolve, _reject) => {
     const fileReader = new FileReader();
@@ -69,4 +71,12 @@ export const generatePagination = (currentPage: number, totalPages: number) => {
     "...",
     totalPages,
   ];
+};
+
+export const resetState = () => {
+  state.color = "#C10048";
+  state.isLogoImage = true;
+  state.isFullImage = false;
+  state.logoImage = "./assets/images/batman.png";
+  state.fullImage = "./assets/images/batman.png";
 };

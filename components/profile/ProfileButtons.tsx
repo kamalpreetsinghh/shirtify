@@ -13,10 +13,16 @@ const ProfileButtons = ({ userId }: { userId: string }) => {
     <>
       {userId === loggedInUserId ? (
         <div className="flex gap-2 w-full">
-          <button onClick={() => {}} className="rounded-button bg-primary mt-4">
+          <button
+            onClick={() => {}}
+            className="rounded-button-primary-color mt-4"
+          >
             Followers
           </button>
-          <button onClick={() => {}} className="rounded-button bg-primary mt-4">
+          <button
+            onClick={() => {}}
+            className="rounded-button-primary-color mt-4"
+          >
             Following
           </button>
         </div>

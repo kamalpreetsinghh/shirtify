@@ -20,10 +20,16 @@ const AIPicker = ({
           <button>Asking AI...</button>
         ) : (
           <>
-            <button className="rounded-button" onClick={handleSubmit}>
+            <button
+              className="rounded-button-primary-color"
+              onClick={handleSubmit}
+            >
               AI Logo
             </button>
-            <button className="rounded-button" onClick={handleSubmit}>
+            <button
+              className="rounded-button-primary-color"
+              onClick={handleSubmit}
+            >
               AI Full
             </button>
           </>

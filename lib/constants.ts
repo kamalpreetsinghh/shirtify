@@ -27,3 +27,11 @@ export const FilterTabs: ITabInfo[] = [
 ];
 
 export const DecalTypes = ["logoImage", "fullImage"];
+
+export const DefaultState = {
+  color: "#C10048",
+  isLogoImage: true,
+  isFullImage: false,
+  logoImage: "./assets/images/batman.png",
+  fullImage: "./assets/images/batman.png",
+};

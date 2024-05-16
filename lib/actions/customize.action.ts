@@ -1,7 +1,7 @@
 "use server";
 
 import { v2 as cloudinary } from "cloudinary";
-import { ICustomization } from "../types";
+import { ICustomization, UpdateCustomization } from "../types";
 import { isBase64 } from "../utils";
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
@@ -38,7 +38,7 @@ export const getCustomizations = async (pageNumber: number) => {
 };
 
 export const createCustomization = async ({
-  userId,
+  id,
   logoImage,
   fullImage,
   isLogoImage,
@@ -50,11 +50,38 @@ export const createCustomization = async ({
   try {
     await sql`
     INSERT INTO customizations (user_id, logo_image, full_image, is_logo_image, is_full_image, color) 
-    VALUES (${userId}, ${logoImageUrl}, ${fullImageUrl}, ${isLogoImage}, ${isFullImage}, ${color})
+    VALUES (${id}, ${logoImageUrl}, ${fullImageUrl}, ${isLogoImage}, ${isFullImage}, ${color})
   `;
   } catch (error) {
     return {
       message: "Database Error: Failed to Create Customization.",
+    };
+  }
+};
+
+export const updateCustomization = async ({
+  customization: { id, logoImage, fullImage, isLogoImage, isFullImage, color },
+  previousFullImageUrl,
+  previousLogoImageUrl,
+}: UpdateCustomization) => {
+  console.log(previousFullImageUrl);
+  console.log(previousLogoImageUrl);
+  await deleteImages(previousFullImageUrl, previousLogoImageUrl);
+  const [logoImageUrl, fullImageUrl] = await uploadImages(logoImage, fullImage);
+
+  try {
+    await sql`
+    UPDATE customizations
+    SET logo_image = ${logoImageUrl},
+    full_image = ${fullImageUrl},
+    is_logo_image = ${isLogoImage},
+    is_full_image = ${isFullImage}, 
+    color = ${color}
+    WHERE id = ${id}
+  `;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Customization.",
     };
   }
 };
@@ -152,6 +179,25 @@ export const getUserCustomizationsPages = async (userId: string) => {
   }
 };
 
+export const deleteCustomization = async (
+  id: string,
+  logoImageUrl: string | null,
+  fullImageUrl: string | null
+) => {
+  try {
+    await deleteImages(logoImageUrl, fullImageUrl);
+
+    await sql`
+    DELETE FROM customizations
+    WHERE id = ${id}
+  `;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Delete Customization.",
+    };
+  }
+};
+
 const uploadImages = async (
   logoImage: string,
   fullImage: string
@@ -198,4 +244,42 @@ const uploadImages = async (
   }
 
   return [logoImageUrl, fullImageUrl];
+};
+
+const deleteImages = async (
+  logoImageUrl: string | null,
+  fullImageUrl: string | null
+) => {
+  const folder = "shirtify/";
+
+  cloudinary.config({
+    cloud_name: process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET,
+    secure: true,
+  });
+
+  if (logoImageUrl && fullImageUrl) {
+    const logoImagePublicId = folder + getPublicId(logoImageUrl);
+    const fullImagePublicId = folder + getPublicId(fullImageUrl);
+
+    await Promise.all([
+      cloudinary.uploader.destroy(logoImagePublicId),
+      cloudinary.uploader.destroy(fullImagePublicId),
+    ]);
+  } else {
+    if (logoImageUrl) {
+      const logoImagePublicId = folder + getPublicId(logoImageUrl);
+      await cloudinary.uploader.destroy(logoImagePublicId);
+    }
+
+    if (fullImageUrl) {
+      const fullImagePublicId = folder + getPublicId(fullImageUrl);
+      await cloudinary.uploader.destroy(fullImagePublicId);
+    }
+  }
+};
+
+const getPublicId = (url: string) => {
+  return url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
 };

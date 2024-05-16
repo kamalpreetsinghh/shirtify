@@ -4,7 +4,7 @@ import state from "@/store";
 import { SketchPicker } from "react-color";
 import { useSnapshot } from "valtio";
 
-const ColorPicker = () => {
+const ColorPicker = ({ onChange }: { onChange: (color: string) => void }) => {
   const snap = useSnapshot(state);
 
   return (
@@ -12,7 +12,7 @@ const ColorPicker = () => {
       <SketchPicker
         color={snap.color}
         disableAlpha
-        onChange={(color) => (state.color = color.hex)}
+        onChange={(color) => onChange(color.hex)}
       />
     </div>
   );

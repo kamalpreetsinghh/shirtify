@@ -47,7 +47,7 @@ const Navbar = () => {
         <ThemeSwitch />
         <>
           <SignedOut>
-            <div className="rounded-button">
+            <div className="rounded-button-primary-color">
               <SignInButton />
             </div>
           </SignedOut>

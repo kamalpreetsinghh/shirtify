@@ -24,13 +24,13 @@ const FilePicker = ({ file, setFile, readFile }: IFilePicker) => {
 
       <div className="mt-4 flex flex-wrap gap-3">
         <button
-          className="flex-1 rounded-button"
+          className="flex-1 rounded-button-primary-color"
           onClick={() => readFile("logoImage")}
         >
           Logo
         </button>
         <button
-          className="flex-1 rounded-button"
+          className="flex-1 rounded-button-primary-color"
           onClick={() => readFile("fullImage")}
         >
           Full

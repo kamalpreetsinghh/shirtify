@@ -46,7 +46,7 @@ const ProfileActions = ({ userId, followingId }: ProfileActionsProps) => {
     <button
       type="button"
       onClick={handleOnClick}
-      className="rounded-button bg-primary mt-4"
+      className="rounded-button-primary-color mt-4"
     >
       {isFollowing ? "Following" : "Follow"}
     </button>

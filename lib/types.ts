@@ -26,7 +26,7 @@ export type IAIPicker = {
 };
 
 export type ICustomization = {
-  userId: string;
+  id: string;
   logoImage: string;
   fullImage: string;
   isLogoImage: boolean;
@@ -62,4 +62,10 @@ export type IThreeDModelState = {
   isLogoImage: boolean;
   isFullImage: boolean;
   color: string;
+};
+
+export type UpdateCustomization = {
+  customization: ICustomization;
+  previousFullImageUrl: string | null;
+  previousLogoImageUrl: string | null;
 };
