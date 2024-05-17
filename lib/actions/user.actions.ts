@@ -1,3 +1,5 @@
+"use server";
+
 import { sql } from "@vercel/postgres";
 import { User } from "../types";
 
@@ -9,7 +11,7 @@ export const createUser = async ({
   bio,
 }: User) => {
   try {
-    const createdUser = await sql`
+    const result = await sql`
     INSERT INTO users (id, first_name, last_name, avatar, bio) VALUES 
     (${id}, ${firstName}, ${lastName}, ${avatar}, ${bio});
 `;
@@ -22,7 +24,7 @@ export const createUser = async ({
 };
 
 export const getUserDetails = async (userId: string) => {
-  const userDetails = await sql`SELECT 
+  const result = await sql`SELECT 
   id,
   first_name AS "firstName",
   last_name AS "lastName",
@@ -30,26 +32,38 @@ export const getUserDetails = async (userId: string) => {
   bio 
   FROM users WHERE id = ${userId};`;
 
-  return userDetails.rows;
+  return result.rows;
+};
+
+export const isFollowingUser = async (
+  followerId: string,
+  followeeId: string
+) => {
+  const result = await sql`
+  SELECT EXISTS (
+    SELECT 1
+    FROM user_following
+    WHERE follower_id = ${followerId} AND followee_id = ${followeeId}
+);`;
+  return result.rows[0];
 };
 
 export const followUser = async (followerId: string, followeeId: string) => {
-  const followUserResult =
-    await sql`INSERT INTO user_following (follower_id, followee_id)
+  const result = await sql`INSERT INTO user_following (follower_id, followee_id)
   VALUES (${followerId}, ${followeeId});`;
 };
 
 export const unFollowUser = async (followerId: string, followeeId: string) => {
-  const unFolloweUserResult = await sql`DELETE FROM user_following
+  const result = await sql`DELETE FROM user_following
   WHERE follower_id = ${followerId} AND followee_id = ${followeeId};`;
 };
 
 export const getFollowersList = async (userId: string) => {
-  const getFollowersResult =
+  const result =
     await sql`SELECT * FROM user_following WHERE followee_id = ${userId};`;
 };
 
 export const getFollowingList = async (userId: string) => {
-  const getFollowersResult =
+  const result =
     await sql`SELECT * FROM user_following WHERE followee_id = ${userId};`;
 };

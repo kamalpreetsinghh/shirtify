@@ -1,6 +1,4 @@
-import CustomizationsFeed from "@/components/CustomizationsFeed";
-import Pagination from "@/components/pagination/Pagination";
-import ProfileInfo from "@/components/profile/ProfileInfo";
+import ProfileHeader from "@/components/profile/ProfileHeader";
 import {
   getUserCustomizations,
   getUserCustomizationsPages,
@@ -24,22 +22,24 @@ const ProfilePage = async ({
 
   const totalPages = await getUserCustomizationsPages(id);
 
+  const user: User = {
+    id,
+    avatar: userDetails[0].avatar,
+    firstName: userDetails[0].firstName,
+    lastName: userDetails[0].lastName,
+    bio: userDetails[0].bio,
+  };
+
   return (
     <>
-      <ProfileInfo
-        userId={id}
-        image={userDetails[0].avatar || ""}
-        firstName={userDetails[0].firstName}
-        lastName={userDetails[0].lastName}
-        bio={customizations[0].bio}
-      />
-      <CustomizationsFeed
+      <ProfileHeader user={user} />
+      {/* <CustomizationsFeed
         customizationDetails={customizations}
         isProfile={true}
       />
       <div className="mt-8 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
-      </div>
+      </div> */}
     </>
   );
 };
