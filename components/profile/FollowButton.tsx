@@ -5,6 +5,8 @@ import {
   isFollowingUser,
   unFollowUser,
 } from "@/lib/actions/user.actions";
+import { fadeAnimation } from "@/lib/motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 type ProfileActionsProps = {
@@ -29,9 +31,9 @@ const FollowButton = ({ userId, followingId }: ProfileActionsProps) => {
     try {
       setIsSubmitting(true);
       if (isFollowing) {
-        const response = await unFollowUser(userId, followingId);
+        await unFollowUser(userId, followingId);
       } else {
-        const response = await followUser(userId, followingId);
+        await followUser(userId, followingId);
       }
       setIsFollowing((prevIsFollowing) => !prevIsFollowing);
     } catch (error) {
@@ -42,10 +44,11 @@ const FollowButton = ({ userId, followingId }: ProfileActionsProps) => {
   };
 
   return (
-    <button
+    <motion.button
       type="button"
       onClick={handleOnClick}
       className="rounded-button-primary-color mt-4 w-full"
+      {...fadeAnimation}
     >
       {isSubmitting ? (
         <div className="h-6 flex items-center justify-center">
@@ -54,7 +57,7 @@ const FollowButton = ({ userId, followingId }: ProfileActionsProps) => {
       ) : (
         <>{isFollowing ? "Following" : "Follow"}</>
       )}
-    </button>
+    </motion.button>
   );
 };
 

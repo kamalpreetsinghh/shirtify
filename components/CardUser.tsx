@@ -1,8 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import UserNameIcon from "./customize/UserNameIcon";
 import { motion } from "framer-motion";
+import UserNameIcon from "./UserNameIcon";
 
 type CardUserProps = {
   image?: string;

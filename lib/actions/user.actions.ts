@@ -59,11 +59,27 @@ export const unFollowUser = async (followerId: string, followeeId: string) => {
 };
 
 export const getFollowersList = async (userId: string) => {
-  const result =
-    await sql`SELECT * FROM user_following WHERE followee_id = ${userId};`;
+  const result = await sql`SELECT 
+    users.id AS "userId",
+    users.first_name AS "firstName",
+    users.last_name AS "lastName",
+    users.avatar 
+    FROM user_following 
+    JOIN users ON user_following.follower_id = users.id
+    WHERE user_following.followee_id = ${userId};`;
+
+  return result.rows;
 };
 
 export const getFollowingList = async (userId: string) => {
-  const result =
-    await sql`SELECT * FROM user_following WHERE followee_id = ${userId};`;
+  const result = await sql`SELECT
+    users.id AS "userId",
+    users.first_name AS "firstName",
+    users.last_name AS "lastName",
+    users.avatar 
+    FROM user_following 
+    JOIN users ON user_following.followee_id = users.id
+    WHERE user_following.follower_id = ${userId};`;
+
+  return result.rows;
 };

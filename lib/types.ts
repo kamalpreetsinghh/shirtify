@@ -69,3 +69,15 @@ export type UpdateCustomization = {
   previousFullImageUrl: string | null;
   previousLogoImageUrl: string | null;
 };
+
+export type FollowerUser = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  avatar?: string;
+};
+
+export enum ModalType {
+  "Following",
+  "Followers",
+}
