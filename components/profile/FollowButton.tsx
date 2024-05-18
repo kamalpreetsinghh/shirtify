@@ -47,7 +47,7 @@ const FollowButton = ({ userId, followingId }: ProfileActionsProps) => {
     <motion.button
       type="button"
       onClick={handleOnClick}
-      className="rounded-button-primary-color mt-4 w-full"
+      className="rounded-button bg-primary mt-4 w-full"
       {...fadeAnimation}
     >
       {isSubmitting ? (

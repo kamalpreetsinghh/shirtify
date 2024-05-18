@@ -102,7 +102,7 @@ const UserCustomization = ({
       {isSignedIn && userId === loggedInUserId && (
         <div className="w-full flex justify-center gap-4">
           <Link
-            className="rounded-button-primary-color"
+            className="rounded-button bg-primary"
             href={`/update/${customizationId}`}
           >
             Update
@@ -133,7 +133,7 @@ const UserCustomization = ({
                   )}
                 </button>
                 <DialogClose asChild>
-                  <button className="w-[90px] rounded-button-primary-color">
+                  <button className="w-[90px] rounded-button bg-primary">
                     Cancel
                   </button>
                 </DialogClose>

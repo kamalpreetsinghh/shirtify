@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useState } from "react";
 import UserNameIcon from "../UserNameIcon";
 import { FollowerUser, ModalType } from "@/lib/types";
 import { followUser, unFollowUser } from "@/lib/actions/user.actions";

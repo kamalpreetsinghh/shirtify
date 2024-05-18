@@ -1,3 +1,5 @@
+import CustomizationsFeed from "@/components/CustomizationsFeed";
+import Pagination from "@/components/pagination/Pagination";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import {
   getUserCustomizations,
@@ -33,13 +35,13 @@ const ProfilePage = async ({
   return (
     <>
       <ProfileHeader user={user} />
-      {/* <CustomizationsFeed
+      <CustomizationsFeed
         customizationDetails={customizations}
         isProfile={true}
       />
       <div className="mt-8 flex w-full justify-center">
         <Pagination totalPages={totalPages} />
-      </div> */}
+      </div>
     </>
   );
 };
