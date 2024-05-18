@@ -2,7 +2,7 @@
 
 import { IThreeDModelState } from "@/lib/types";
 import { useEffect, useState } from "react";
-import { resetState, urlToBase64 } from "@/lib/utils";
+import { urlToBase64 } from "@/lib/utils";
 import { Loader } from "@react-three/drei";
 import { useAuth } from "@clerk/nextjs";
 import {
@@ -19,6 +19,7 @@ import { useRouter } from "next/navigation";
 import state from "@/store";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { DefaultState } from "@/lib/constants";
 
 const Scene = dynamic(() => import("@/components/canvas/Scene"), {
   ssr: false,
@@ -47,6 +48,16 @@ const UserCustomization = ({
   };
 
   const router = useRouter();
+
+  const resetState = () => {
+    const { color, isLogoImage, isFullImage, logoImage, fullImage } =
+      DefaultState;
+    state.color = color;
+    state.isLogoImage = isLogoImage;
+    state.isFullImage = isFullImage;
+    state.logoImage = logoImage;
+    state.fullImage = fullImage;
+  };
 
   useEffect(() => {
     const loadImagesFromUrl = async () => {
