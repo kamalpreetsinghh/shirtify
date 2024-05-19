@@ -1,5 +1,5 @@
-import { createUser } from "@/lib/actions/user.actions";
-import { User } from "@/lib/types";
+import { createUser, updateUser } from "@/lib/actions/user.actions";
+import { ClerkUser } from "@/lib/types";
 import { WebhookEvent } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
@@ -61,18 +61,34 @@ export async function POST(req: Request) {
   if (eventType === "user.created") {
     const { id, image_url, first_name, last_name, username } = evt.data;
 
-    const user: User = {
+    const user: ClerkUser = {
       id,
       firstName: first_name || "",
       lastName: last_name || "",
       username: username || "",
       avatar: image_url,
-      bio: null,
     };
 
     const newUser = await createUser(user);
 
     return NextResponse.json({ message: "OK", user: newUser });
+  }
+
+  //UPDATE
+  if (eventType === "user.updated") {
+    const { id, image_url, first_name, last_name, username } = evt.data;
+
+    const user: ClerkUser = {
+      id,
+      firstName: first_name || "",
+      lastName: last_name || "",
+      username: username || "",
+      avatar: image_url,
+    };
+
+    const updatedUser = await updateUser(user);
+
+    return NextResponse.json({ message: "OK", user: updateUser });
   }
 
   return new Response("", { status: 200 });
