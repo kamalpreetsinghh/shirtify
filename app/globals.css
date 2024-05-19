@@ -79,6 +79,11 @@ body {
   background-color: var(--text-color);
 }
 
+.auth {
+  @apply flex justify-center items-center min-h-screen w-full;
+  background-color: var(--dialog-overlay-color);
+}
+
 .navbar {
   @apply hidden lg:flex justify-between items-center w-full py-4 gap-4 px-6 sm:px-24;
 }

@@ -7,7 +7,7 @@ import {
   slideAnimation,
 } from "@/lib/motion";
 import { motion } from "framer-motion";
-import { pacifico } from "./fonts";
+import { pacifico } from "../fonts";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 

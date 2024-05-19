@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  SignInButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-  useAuth,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitch from "./ThemeSwitch";
@@ -48,7 +42,7 @@ const Navbar = () => {
         <>
           <SignedOut>
             <div className="rounded-button bg-primary">
-              <SignInButton />
+              <Link href="/sign-in">Sign In</Link>
             </div>
           </SignedOut>
           <SignedIn>
