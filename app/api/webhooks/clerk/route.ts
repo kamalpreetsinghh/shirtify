@@ -1,12 +1,13 @@
 import { createUser, updateUser } from "@/lib/actions/user.actions";
 import { ClerkUser } from "@/lib/types";
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { WebhookEvent, auth, currentUser } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
+  const { userId, getToken } = auth();
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
@@ -76,19 +77,20 @@ export async function POST(req: Request) {
 
   //UPDATE
   if (eventType === "user.updated") {
-    const { id, image_url, first_name, last_name, username } = evt.data;
+    const { id, image_url, first_name, last_name } = evt.data;
+    const user2 = await currentUser();
+    console.log(user2);
+    // const user: ClerkUser = {
+    //   id,
+    //   firstName: first_name || "",
+    //   lastName: last_name || "",
+    //   username: username || "",
+    //   avatar: image_url,
+    // };
 
-    const user: ClerkUser = {
-      id,
-      firstName: first_name || "",
-      lastName: last_name || "",
-      username: username || "",
-      avatar: image_url,
-    };
+    // const updatedUser = await updateUser(user);
 
-    const updatedUser = await updateUser(user);
-
-    return NextResponse.json({ message: "OK", user: updateUser });
+    // return NextResponse.json({ message: "OK", user: updateUser });
   }
 
   return new Response("", { status: 200 });
