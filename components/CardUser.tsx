@@ -6,11 +6,10 @@ import UserNameIcon from "./UserNameIcon";
 
 type CardUserProps = {
   image?: string;
-  firstName: string;
-  lastName: string;
+  username: string;
 };
 
-const CardUser = ({ image, firstName, lastName }: CardUserProps) => {
+const CardUser = ({ image, username }: CardUserProps) => {
   return (
     <motion.div
       whileHover={{ scale: 1.1 }}
@@ -29,14 +28,14 @@ const CardUser = ({ image, firstName, lastName }: CardUserProps) => {
         </div>
       ) : (
         <UserNameIcon
-          name={firstName[0].toUpperCase()}
+          name={username[0].toUpperCase()}
           className="w-10 h-10 text-2xl"
         />
       )}
 
       <div className="flex flex-col">
         <h3 className="font-satoshi font-semibold text-grey-color">
-          {`${firstName} ${lastName}`}
+          {`${username}`}
         </h3>
       </div>
     </motion.div>

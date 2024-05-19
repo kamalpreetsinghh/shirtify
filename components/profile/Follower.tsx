@@ -16,7 +16,7 @@ type FollowerProps = {
 const Follower = ({
   modalType,
   userId,
-  follower: { userId: id, firstName, lastName, avatar },
+  follower: { userId: id, username, firstName, lastName, avatar },
 }: FollowerProps) => {
   const [isFollowing, setIsFollowing] = useState(true);
 
@@ -60,7 +60,8 @@ const Follower = ({
         )}
 
         <div>
-          <p className="font-bold">
+          <p className="font-bold">{username}</p>
+          <p className="text-grey-color">
             {firstName} {lastName}
           </p>
         </div>

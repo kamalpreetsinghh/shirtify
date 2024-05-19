@@ -21,8 +21,7 @@ export const getCustomizations = async (pageNumber: number) => {
     customizations.is_full_image AS "isFullImage",
     customizations.color,
     users.id AS "userId",
-    users.first_name AS "firstName",
-    users.last_name AS "lastName",
+    username,
     users.avatar
     FROM customizations  
     JOIN users ON customizations.user_id = users.id
@@ -101,10 +100,8 @@ export const getUserCustomizations = async (
     customizations.is_full_image AS "isFullImage",
     customizations.color,
     users.id AS "userId",
-    users.first_name AS "firstName",
-    users.last_name AS "lastName",
-    users.avatar,
-    users.bio
+    username,
+    users.avatar
     FROM customizations  
     JOIN users ON customizations.user_id = users.id
     WHERE customizations.user_id = ${userId}
@@ -133,6 +130,7 @@ export const getCustomizationByID = async (customizationID: string) => {
     users.id AS "userId",
     users.first_name AS "firstName",
     users.last_name AS "lastName",
+    username,
     users.avatar,
     users.bio
     FROM customizations  

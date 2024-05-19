@@ -11,7 +11,7 @@ type ProfileInfoProps = {
 };
 
 const ProfileInfo = ({
-  user: { id, firstName, lastName, avatar, bio },
+  user: { id, firstName, lastName, username, avatar, bio },
 }: ProfileInfoProps) => {
   return (
     <motion.div className="flex-col" {...fadeRight}>
@@ -29,7 +29,8 @@ const ProfileInfo = ({
           <UserNameIcon name={firstName} className="w-28 h-28 text-7xl" />
         </span>
       )}
-      <p className="text-4xl font-bold mt-4">
+      <p className="text-2xl text-grey-color mt-8">{username}</p>
+      <p className="text-4xl font-semibold mt-4">
         {firstName} {lastName}
       </p>
       <p className="mt-5 text-lg sm:text-xl max-w-2xl;">

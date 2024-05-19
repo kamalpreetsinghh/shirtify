@@ -52,6 +52,7 @@ export const getUserDetails = async (userId: string) => {
   id,
   first_name AS "firstName",
   last_name AS "lastName",
+  username,
   avatar,
   bio 
   FROM users WHERE id = ${userId};`;
@@ -85,6 +86,7 @@ export const unFollowUser = async (followerId: string, followeeId: string) => {
 export const getFollowersList = async (userId: string) => {
   const result = await sql`SELECT 
     users.id AS "userId",
+    username,
     users.first_name AS "firstName",
     users.last_name AS "lastName",
     users.avatar 
@@ -98,6 +100,7 @@ export const getFollowersList = async (userId: string) => {
 export const getFollowingList = async (userId: string) => {
   const result = await sql`SELECT
     users.id AS "userId",
+    username,
     users.first_name AS "firstName",
     users.last_name AS "lastName",
     users.avatar 

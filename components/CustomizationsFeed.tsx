@@ -86,8 +86,7 @@ const CustomizationCard = ({
         <Link href={`/profile/${customizationDetail.userId}`}>
           <CardUser
             image={customizationDetail.avatar}
-            firstName={customizationDetail.firstName}
-            lastName={customizationDetail.lastName}
+            username={customizationDetail.username}
           />
         </Link>
       )}

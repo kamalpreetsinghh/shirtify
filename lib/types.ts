@@ -59,10 +59,8 @@ export type ICustomizationDetails = {
   isFullImage: boolean;
   color: string;
   userId: string;
-  firstName: string;
-  lastName: string;
+  username: string;
   avatar: string;
-  bio?: string;
 };
 
 export type IThreeDModelState = {
@@ -81,6 +79,7 @@ export type UpdateCustomization = {
 
 export type FollowerUser = {
   userId: string;
+  username: string;
   firstName: string;
   lastName: string;
   avatar?: string;
