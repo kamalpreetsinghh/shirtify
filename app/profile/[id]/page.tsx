@@ -24,27 +24,29 @@ const ProfilePage = async ({
 
   const totalPages = await getUserCustomizationsPages(id);
 
-  const user: User = {
-    id,
-    avatar: userDetails[0].avatar,
-    firstName: userDetails[0].firstName,
-    lastName: userDetails[0].lastName,
-    username: userDetails[0].username,
-    bio: userDetails[0].bio,
-  };
+  if (userDetails && userDetails.length > 0) {
+    const user: User = {
+      id,
+      avatar: userDetails[0].avatar,
+      firstName: userDetails[0].firstName,
+      lastName: userDetails[0].lastName,
+      username: userDetails[0].username,
+      bio: userDetails[0].bio,
+    };
 
-  return (
-    <>
-      <ProfileHeader user={user} />
-      <CustomizationsFeed
-        customizationDetails={customizations}
-        isProfile={true}
-      />
-      <div className="mt-8 flex w-full justify-center">
-        <Pagination totalPages={totalPages} />
-      </div>
-    </>
-  );
+    return (
+      <>
+        <ProfileHeader user={user} />
+        <CustomizationsFeed
+          customizationDetails={customizations}
+          isProfile={true}
+        />
+        <div className="mt-8 flex w-full justify-center">
+          <Pagination totalPages={totalPages} />
+        </div>
+      </>
+    );
+  }
 };
 
 export default ProfilePage;
