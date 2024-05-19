@@ -62,13 +62,20 @@ export async function POST(req: Request) {
 
   // CREATE
   if (eventType === "user.created") {
+    let userName = "";
     const { id, image_url, first_name, last_name, username } = evt.data;
+
+    if (username) {
+      userName = username;
+    } else {
+      userName = await fetchUserNameWithRetry(id);
+    }
 
     const user: ClerkUser = {
       id,
       firstName: first_name || "",
       lastName: last_name || "",
-      username: username || "",
+      username: userName,
       avatar: image_url,
     };
 
@@ -79,33 +86,35 @@ export async function POST(req: Request) {
 
   //UPDATE
   if (eventType === "user.updated") {
-    const { id, image_url, first_name, last_name } = evt.data;
-    await fetchUserDetailsWithRetry(id);
-    // const user: ClerkUser = {
-    //   id,
-    //   firstName: first_name || "",
-    //   lastName: last_name || "",
-    //   username: username || "",
-    //   avatar: image_url,
-    // };
+    const userId = evt.data.id;
+    const { id, firstName, lastName, username, imageUrl } =
+      await clerkClient.users.getUser(userId);
 
-    // const updatedUser = await updateUser(user);
+    const user: ClerkUser = {
+      id,
+      firstName: firstName || "",
+      lastName: lastName || "",
+      username: username || "",
+      avatar: imageUrl,
+    };
 
-    // return NextResponse.json({ message: "OK", user: updateUser });
+    const updatedUser = await updateUser(user);
+
+    return NextResponse.json({ message: "OK", user: updatedUser });
   }
 
   return new Response("", { status: 200 });
 }
 
-const fetchUserDetailsWithRetry = async (
+const fetchUserNameWithRetry = async (
   userId: string,
   retries = 0
-): Promise<any> => {
+): Promise<string> => {
   try {
-    const user = await clerkClient.users.getUser(userId);
-    console.log(user);
-    if (user.username) {
-      return user;
+    const { username } = await clerkClient.users.getUser(userId);
+
+    if (username) {
+      return username;
     } else {
       throw new Error("Username not available yet.");
     }
@@ -116,7 +125,7 @@ const fetchUserDetailsWithRetry = async (
         `Retry ${retries + 1}/${MAX_RETRIES}: Waiting ${delay}ms to retry...`
       );
       await new Promise((res) => setTimeout(res, delay));
-      return fetchUserDetailsWithRetry(userId, retries + 1);
+      return fetchUserNameWithRetry(userId, retries + 1);
     } else {
       throw new Error(
         `Failed to fetch user details after ${MAX_RETRIES} retries: ${error.message}`
