@@ -7,12 +7,13 @@ export const createUser = async ({
   id,
   firstName,
   lastName,
+  username,
   avatar,
 }: ClerkUser) => {
   try {
     const result = await sql`
-    INSERT INTO users (id, first_name, last_name, avatar) VALUES 
-    (${id}, ${firstName}, ${lastName}, ${avatar});
+    INSERT INTO users (id, first_name, last_name, username, avatar) VALUES 
+    (${id}, ${firstName}, ${lastName}, ${username}, ${avatar});
 `;
   } catch (error) {
     console.log(error);
@@ -26,6 +27,7 @@ export const updateUser = async ({
   id,
   firstName,
   lastName,
+  username,
   avatar,
 }: ClerkUser) => {
   try {
@@ -33,6 +35,7 @@ export const updateUser = async ({
     UPDATE users 
     SET first_name = ${firstName}, 
     last_name = ${lastName}, 
+    username = ${username},
     avatar = ${avatar}
     WHERE id = ${id}
 `;
