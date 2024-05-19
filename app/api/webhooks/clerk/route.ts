@@ -79,6 +79,8 @@ export async function POST(req: Request) {
       avatar: image_url,
     };
 
+    console.log(user);
+
     const newUser = await createUser(user);
 
     return NextResponse.json({ message: "OK", user: newUser });
@@ -97,6 +99,8 @@ export async function POST(req: Request) {
       username: username || "",
       avatar: imageUrl,
     };
+
+    console.log(user);
 
     const updatedUser = await updateUser(user);
 
