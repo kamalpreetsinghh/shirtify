@@ -1,13 +1,15 @@
 import { createUser, updateUser } from "@/lib/actions/user.actions";
 import { ClerkUser } from "@/lib/types";
-import { WebhookEvent, auth, currentUser } from "@clerk/nextjs/server";
+import { WebhookEvent, clerkClient } from "@clerk/nextjs/server";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { Webhook } from "svix";
 
+const MAX_RETRIES = 5;
+const INITIAL_DELAY = 1000; // 1 second
+
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.WEBHOOK_SECRET;
-  const { userId, getToken } = auth();
 
   if (!WEBHOOK_SECRET) {
     throw new Error(
@@ -78,8 +80,7 @@ export async function POST(req: Request) {
   //UPDATE
   if (eventType === "user.updated") {
     const { id, image_url, first_name, last_name } = evt.data;
-    const user2 = await currentUser();
-    console.log(user2);
+    await fetchUserDetailsWithRetry(id);
     // const user: ClerkUser = {
     //   id,
     //   firstName: first_name || "",
@@ -95,3 +96,31 @@ export async function POST(req: Request) {
 
   return new Response("", { status: 200 });
 }
+
+const fetchUserDetailsWithRetry = async (
+  userId: string,
+  retries = 0
+): Promise<any> => {
+  try {
+    const user = await clerkClient.users.getUser(userId);
+    console.log(user);
+    if (user.username) {
+      return user;
+    } else {
+      throw new Error("Username not available yet.");
+    }
+  } catch (error: any) {
+    if (retries < MAX_RETRIES) {
+      const delay = INITIAL_DELAY * Math.pow(2, retries);
+      console.log(
+        `Retry ${retries + 1}/${MAX_RETRIES}: Waiting ${delay}ms to retry...`
+      );
+      await new Promise((res) => setTimeout(res, delay));
+      return fetchUserDetailsWithRetry(userId, retries + 1);
+    } else {
+      throw new Error(
+        `Failed to fetch user details after ${MAX_RETRIES} retries: ${error.message}`
+      );
+    }
+  }
+};

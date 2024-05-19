@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.0.7",
     "@clerk/nextjs": "^5.0.12",
     "@radix-ui/react-dialog": "^1.0.5",
     "@react-three/drei": "^9.105.6",
