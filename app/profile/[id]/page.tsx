@@ -29,6 +29,7 @@ const ProfilePage = async ({
     avatar: userDetails[0].avatar,
     firstName: userDetails[0].firstName,
     lastName: userDetails[0].lastName,
+    username: userDetails[0].username,
     bio: userDetails[0].bio,
   };
 
