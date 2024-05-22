@@ -51,7 +51,7 @@ const FollowButton = ({ userId, followingId }: ProfileActionsProps) => {
       {...fadeAnimation}
     >
       {isSubmitting ? (
-        <div className="h-6 flex items-center justify-center">
+        <div className="h-5 flex items-center justify-center">
           <span className="horizontal-spinner bottom-3"></span>
         </div>
       ) : (

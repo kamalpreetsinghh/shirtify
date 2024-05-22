@@ -5,13 +5,16 @@ import { motion } from "framer-motion";
 import { User } from "@/lib/types";
 import Image from "next/image";
 import UserNameIcon from "../UserNameIcon";
+import Bio from "./Bio";
 
 type ProfileInfoProps = {
   user: User;
+  canEdit: boolean;
 };
 
 const ProfileInfo = ({
   user: { id, firstName, lastName, username, avatar, bio },
+  canEdit,
 }: ProfileInfoProps) => {
   return (
     <motion.div className="flex-col" {...fadeRight}>
@@ -33,9 +36,17 @@ const ProfileInfo = ({
       <p className="text-4xl font-semibold mt-4">
         {firstName} {lastName}
       </p>
-      <p className="mt-5 text-lg sm:text-xl max-w-2xl;">
-        {bio ? bio : "Elevating style to an art form, one outfit at a time."}
-      </p>
+      {canEdit ? (
+        <Bio
+          id={id}
+          bio={bio || "Elevating style to an art form, one outfit at a time."}
+          canEdit={canEdit}
+        />
+      ) : (
+        <p className="mt-5 text-lg sm:text-xl">
+          {bio ? bio : "Elevating style to an art form, one outfit at a time."}
+        </p>
+      )}
     </motion.div>
   );
 };

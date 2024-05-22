@@ -122,7 +122,7 @@ const UserCustomization = ({
             <DialogTrigger className="rounded-button bg-red-700">
               Delete
             </DialogTrigger>
-            <DialogContent>
+            <DialogContent className="w-[90vw] rounded-2xl">
               <DialogHeader>
                 <DialogTitle>Are you sure?</DialogTitle>
                 <DialogDescription>
@@ -130,13 +130,13 @@ const UserCustomization = ({
                   from our servers.
                 </DialogDescription>
               </DialogHeader>
-              <div className="w-full flex justify-end gap-4">
+              <div className="w-full flex justify-center md:justify-end gap-2">
                 <button
                   className="w-[90px] rounded-button bg-red-700"
                   onClick={handleDelete}
                 >
                   {isSubmitting ? (
-                    <div className="h-6 flex items-center justify-center">
+                    <div className="h-5 flex items-center justify-center">
                       <span className="horizontal-spinner bottom-3"></span>
                     </div>
                   ) : (

@@ -202,14 +202,14 @@ body {
 .horizontal-spinner:before,
 .horizontal-spinner:after {
   border-radius: 50%;
-  width: 2.5em;
-  height: 2.5em;
+  width: 2em;
+  height: 2em;
   animation-fill-mode: both;
   animation: bblFadInOut 1.8s infinite ease-in-out;
 }
 .horizontal-spinner {
   color: #fff;
-  font-size: 5px;
+  font-size: 4px;
   position: relative;
   text-indent: -9999em;
   transform: translateZ(0);

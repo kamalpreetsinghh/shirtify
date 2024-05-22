@@ -85,7 +85,7 @@ const Connections = ({ userId }: { userId: string }) => {
       >
         Following
       </button>
-      <dialog className="rounded-2xl w-full max-w-md p-4" ref={dialogRef}>
+      <dialog className="rounded-2xl w-[90vw] max-w-md p-4" ref={dialogRef}>
         <div className="flex-col items-center justify-center">
           <div>
             <h1 className="mb-2 font-bold text-center">

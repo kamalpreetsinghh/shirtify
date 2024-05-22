@@ -16,7 +16,7 @@ const ProfileHeader = ({ user }: ProfileHeaderProps) => {
   return (
     <div className="w-full max-w-[800px] flex-col px-8 lg:px-32 py-10">
       <div className="lg:inline-block">
-        <ProfileInfo user={user} />
+        <ProfileInfo user={user} canEdit={user.id === loggedInUserId} />
         {user.id === loggedInUserId ? (
           <Connections userId={loggedInUserId} />
         ) : (

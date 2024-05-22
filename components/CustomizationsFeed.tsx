@@ -7,28 +7,91 @@ import Link from "next/link";
 import CardUser from "./CardUser";
 import state from "@/store";
 import dynamic from "next/dynamic";
+import { fade } from "@/lib/motion";
+import { motion } from "framer-motion";
+import { useAuth } from "@clerk/nextjs";
+import { pacifico } from "@/app/fonts";
 
 const Scene = dynamic(() => import("@/components/canvas/Scene"), {
   ssr: false,
 });
 
+type CustomizationsFeedProps = {
+  customizationDetails: ICustomizationDetails[];
+  isProfile?: boolean;
+  id?: string;
+};
+
 const CustomizationsFeed = ({
   customizationDetails,
   isProfile = false,
-}: {
-  customizationDetails: ICustomizationDetails[];
-  isProfile?: boolean;
-}) => {
+  id,
+}: CustomizationsFeedProps) => {
+  const { userId } = useAuth();
+
   return (
-    <div className="pt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
-      {customizationDetails.map((customization) => (
-        <CustomizationCard
-          key={customization.customizationId}
-          customizationDetail={customization}
-          isProfile={isProfile}
-        />
-      ))}
-    </div>
+    <>
+      {customizationDetails && customizationDetails.length > 0 ? (
+        <div className="pt-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12">
+          {customizationDetails.map((customization) => (
+            <CustomizationCard
+              key={customization.customizationId}
+              customizationDetail={customization}
+              isProfile={isProfile}
+            />
+          ))}
+        </div>
+      ) : (
+        <motion.div
+          className="mt-8 p-4 lg:mt-28 text-xl flex-col items-center"
+          {...fade}
+        >
+          {isProfile ? (
+            <>
+              {id === userId ? (
+                <>
+                  <p
+                    className={`${pacifico.className} font-extrabold text-xl lg:text-3xl text-center`}
+                  >
+                    You have not created any designs.
+                  </p>
+                  <motion.div
+                    whileHover={{ scale: 1.1 }}
+                    className={`${pacifico.className} text-primary font-extrabold 
+                    text-xl lg:text-3xl text-center mt-6`}
+                  >
+                    <Link href="/customize">
+                      Create and share creative designs to the community.
+                    </Link>
+                  </motion.div>
+                </>
+              ) : (
+                <p
+                  className={`${pacifico.className} text-primary font-extrabold text-xl lg:text-3xl text-center`}
+                >
+                  User has not shared any designs.
+                </p>
+              )}
+            </>
+          ) : (
+            <>
+              <p
+                className={`${pacifico.className} font-extrabold text-xl lg:text-3xl text-center`}
+              >
+                There are no designs.
+              </p>
+              <p
+                className={`${pacifico.className} text-primary font-extrabold text-xl lg:text-3xl text-center mt-6`}
+              >
+                <Link href="/customize">
+                  Create and share creative designs to the community.
+                </Link>
+              </p>
+            </>
+          )}
+        </motion.div>
+      )}
+    </>
   );
 };
 

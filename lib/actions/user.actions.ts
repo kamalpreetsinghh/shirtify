@@ -42,7 +42,22 @@ export const updateUser = async ({
   } catch (error) {
     console.log(error);
     return {
-      message: "Database Error: Failed to Create User.",
+      message: "Database Error: Failed to Update User.",
+    };
+  }
+};
+
+export const updateUserBio = async (id: string, bio: string) => {
+  try {
+    const result = await sql`
+    UPDATE users 
+    SET bio = ${bio}
+    WHERE id = ${id}
+`;
+  } catch (error) {
+    console.log(error);
+    return {
+      message: "Database Error: Failed to Update Bio.",
     };
   }
 };
