@@ -41,7 +41,7 @@ const UserCustomization = ({
   const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const threeDModelState2 = {
+  const threeDModelStateWithBase64Images = {
     ...threeDModelState,
     logoImage: state.logoImage,
     fullImage: state.fullImage,
@@ -61,25 +61,13 @@ const UserCustomization = ({
 
   useEffect(() => {
     const loadImagesFromUrl = async () => {
-      if (threeDModelState.logoImage && threeDModelState.fullImage) {
-        const [logoImageResponse, fullImageResponse] = await Promise.all([
-          urlToBase64(threeDModelState.logoImage),
-          urlToBase64(threeDModelState.fullImage),
-        ]);
+      const [logoImageResponse, fullImageResponse] = await Promise.all([
+        urlToBase64(threeDModelState.logoImage),
+        urlToBase64(threeDModelState.fullImage),
+      ]);
 
-        threeDModelState2.logoImage = logoImageResponse;
-        threeDModelState2.fullImage = fullImageResponse;
-      } else if (threeDModelState.logoImage) {
-        const logoImageResponse = await urlToBase64(threeDModelState.logoImage);
-
-        threeDModelState2.logoImage = logoImageResponse;
-        threeDModelState2.fullImage = logoImageResponse;
-      } else if (threeDModelState.fullImage) {
-        const fullImageResponse = await urlToBase64(threeDModelState.fullImage);
-
-        threeDModelState2.logoImage = fullImageResponse;
-        threeDModelState2.fullImage = fullImageResponse;
-      }
+      threeDModelStateWithBase64Images.logoImage = logoImageResponse;
+      threeDModelStateWithBase64Images.fullImage = fullImageResponse;
     };
 
     setIsLoading(true);
@@ -107,7 +95,7 @@ const UserCustomization = ({
     <div className="w-[100vw] h-[82vh]">
       <Scene
         isCustomizable={false}
-        threeDModelState={threeDModelState2}
+        threeDModelState={threeDModelStateWithBase64Images}
         showTexture={true}
       />
       {isSignedIn && userId === loggedInUserId && (

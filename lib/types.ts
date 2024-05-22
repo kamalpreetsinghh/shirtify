@@ -71,12 +71,6 @@ export type IThreeDModelState = {
   color: string;
 };
 
-export type UpdateCustomization = {
-  customization: ICustomization;
-  previousFullImageUrl: string | null;
-  previousLogoImageUrl: string | null;
-};
-
 export type FollowerUser = {
   userId: string;
   username: string;
@@ -89,3 +83,8 @@ export enum ModalType {
   "Following",
   "Followers",
 }
+
+export type PreviousImages = {
+  logoImage: string;
+  fullImage: string;
+};

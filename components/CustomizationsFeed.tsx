@@ -55,7 +55,7 @@ const CustomizationsFeed = ({
                   >
                     You have not created any designs.
                   </p>
-                  <motion.div
+                  <motion.p
                     whileHover={{ scale: 1.1 }}
                     className={`${pacifico.className} text-primary font-extrabold 
                     text-xl lg:text-3xl text-center mt-6`}
@@ -63,7 +63,7 @@ const CustomizationsFeed = ({
                     <Link href="/customize">
                       Create and share creative designs to the community.
                     </Link>
-                  </motion.div>
+                  </motion.p>
                 </>
               ) : (
                 <p
@@ -80,13 +80,14 @@ const CustomizationsFeed = ({
               >
                 There are no designs.
               </p>
-              <p
+              <motion.p
+                whileHover={{ scale: 1.1 }}
                 className={`${pacifico.className} text-primary font-extrabold text-xl lg:text-3xl text-center mt-6`}
               >
                 <Link href="/customize">
                   Create and share creative designs to the community.
                 </Link>
-              </p>
+              </motion.p>
             </>
           )}
         </motion.div>
@@ -107,29 +108,13 @@ const CustomizationCard = ({
 
   useEffect(() => {
     const loadImagesFromUrl = async () => {
-      if (customizationDetail.logoImage && customizationDetail.fullImage) {
-        const [logoImageResponse, fullImageResponse] = await Promise.all([
-          urlToBase64(customizationDetail.logoImage),
-          urlToBase64(customizationDetail.fullImage),
-        ]);
+      const [logoImageResponse, fullImageResponse] = await Promise.all([
+        urlToBase64(customizationDetail.logoImage),
+        urlToBase64(customizationDetail.fullImage),
+      ]);
 
-        setLogoImage(logoImageResponse);
-        setFullImage(fullImageResponse);
-      } else if (customizationDetail.logoImage) {
-        const logoImageResponse = await urlToBase64(
-          customizationDetail.logoImage
-        );
-
-        setLogoImage(logoImageResponse);
-        setFullImage(logoImageResponse);
-      } else if (customizationDetail.fullImage) {
-        const fullImageResponse = await urlToBase64(
-          customizationDetail.fullImage
-        );
-
-        setLogoImage(fullImageResponse);
-        setFullImage(fullImageResponse);
-      }
+      setLogoImage(logoImageResponse);
+      setFullImage(fullImageResponse);
     };
 
     loadImagesFromUrl();

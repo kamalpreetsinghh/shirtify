@@ -1,7 +1,7 @@
 "use server";
 
 import { v2 as cloudinary } from "cloudinary";
-import { ICustomization, UpdateCustomization } from "../types";
+import { ICustomization, PreviousImages } from "../types";
 import { isBase64 } from "../utils";
 import { sql } from "@vercel/postgres";
 import { unstable_noStore as noStore } from "next/cache";
@@ -59,13 +59,17 @@ export const createCustomization = async ({
 };
 
 export const updateCustomization = async ({
-  customization: { id, logoImage, fullImage, isLogoImage, isFullImage, color },
-  previousFullImageUrl,
-  previousLogoImageUrl,
-}: UpdateCustomization) => {
-  console.log(previousFullImageUrl);
-  console.log(previousLogoImageUrl);
-  await deleteImages(previousFullImageUrl, previousLogoImageUrl);
+  id,
+  logoImage,
+  fullImage,
+  isLogoImage,
+  isFullImage,
+  color,
+}: ICustomization) => {
+  const previousImages = (await getPreviousImages(id)) as PreviousImages[];
+
+  await deleteImages(previousImages[0].logoImage, previousImages[0].fullImage);
+
   const [logoImageUrl, fullImageUrl] = await uploadImages(logoImage, fullImage);
 
   try {
@@ -74,7 +78,7 @@ export const updateCustomization = async ({
     SET logo_image = ${logoImageUrl},
     full_image = ${fullImageUrl},
     is_logo_image = ${isLogoImage},
-    is_full_image = ${isFullImage}, 
+    is_full_image = ${isFullImage},
     color = ${color}
     WHERE id = ${id}
   `;
@@ -179,8 +183,8 @@ export const getUserCustomizationsPages = async (userId: string) => {
 
 export const deleteCustomization = async (
   id: string,
-  logoImageUrl: string | null,
-  fullImageUrl: string | null
+  logoImageUrl: string,
+  fullImageUrl: string
 ) => {
   try {
     await deleteImages(logoImageUrl, fullImageUrl);
@@ -230,6 +234,7 @@ const uploadImages = async (
       });
 
       logoImageUrl = response.secure_url;
+      fullImageUrl = response.secure_url;
     }
 
     if (isBase64(fullImage)) {
@@ -238,16 +243,14 @@ const uploadImages = async (
       });
 
       fullImageUrl = response.secure_url;
+      logoImageUrl = response.secure_url;
     }
   }
 
   return [logoImageUrl, fullImageUrl];
 };
 
-const deleteImages = async (
-  logoImageUrl: string | null,
-  fullImageUrl: string | null
-) => {
+const deleteImages = async (logoImageUrl: string, fullImageUrl: string) => {
   const folder = "shirtify/";
 
   cloudinary.config({
@@ -257,7 +260,10 @@ const deleteImages = async (
     secure: true,
   });
 
-  if (logoImageUrl && fullImageUrl) {
+  if (logoImageUrl === fullImageUrl) {
+    const publicId = folder + getPublicId(logoImageUrl);
+    await cloudinary.uploader.destroy(publicId);
+  } else {
     const logoImagePublicId = folder + getPublicId(logoImageUrl);
     const fullImagePublicId = folder + getPublicId(fullImageUrl);
 
@@ -265,19 +271,26 @@ const deleteImages = async (
       cloudinary.uploader.destroy(logoImagePublicId),
       cloudinary.uploader.destroy(fullImagePublicId),
     ]);
-  } else {
-    if (logoImageUrl) {
-      const logoImagePublicId = folder + getPublicId(logoImageUrl);
-      await cloudinary.uploader.destroy(logoImagePublicId);
-    }
-
-    if (fullImageUrl) {
-      const fullImagePublicId = folder + getPublicId(fullImageUrl);
-      await cloudinary.uploader.destroy(fullImagePublicId);
-    }
   }
 };
 
 const getPublicId = (url: string) => {
   return url.substring(url.lastIndexOf("/") + 1, url.lastIndexOf("."));
+};
+
+const getPreviousImages = async (id: string) => {
+  try {
+    const result = await sql`
+    SELECT 
+    logo_image AS "logoImage", 
+    full_image AS "fullImage" 
+    FROM customizations
+    WHERE id = ${id}
+  `;
+    return result.rows;
+  } catch (error) {
+    return {
+      message: "Database Error: Failed to Update Customization.",
+    };
+  }
 };

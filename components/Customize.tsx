@@ -7,12 +7,7 @@ import { slideAnimation } from "@/lib/motion";
 import { EditorTabs, FilterTabs } from "@/lib/constants";
 import { motion } from "framer-motion";
 import { pacifico } from "@/app/fonts";
-import {
-  ICustomization,
-  IDecalType,
-  IThreeDModelState,
-  UpdateCustomization,
-} from "@/lib/types";
+import { ICustomization, IDecalType, IThreeDModelState } from "@/lib/types";
 import {
   createCustomization,
   updateCustomization,
@@ -156,12 +151,9 @@ const Customize = ({
           if (type === "create") {
             await createCustomization(customization);
             toast("Your design is shared with the community.");
-          } else {
-            const updateCustomizationDetails: UpdateCustomization = {
-              customization,
-              previousFullImageUrl: threeDModelState?.fullImage || null,
-              previousLogoImageUrl: threeDModelState?.logoImage || null,
-            };
+          } else if (threeDModelState) {
+            const updateCustomizationDetails = customization;
+
             await updateCustomization(updateCustomizationDetails);
             toast("Your design is updated successfully.");
           }
