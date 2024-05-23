@@ -25,9 +25,7 @@ const CustomizationsPage = async ({
     <>
       <CustomizationsFeed customizationDetails={customizations} />
       {customizations && customizations.length > 0 && (
-        <div className="mt-8 flex w-full justify-center">
-          <Pagination totalPages={totalPages} />
-        </div>
+        <Pagination totalPages={totalPages} />
       )}
     </>
   );

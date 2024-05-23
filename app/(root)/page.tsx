@@ -63,7 +63,10 @@ export default function Home() {
           </motion.div>
         </div>
       </motion.div>
-      <div className="lg:w-3/5 w-full flex flex-col justify-center items-center gap-6">
+      <div className="hidden lg:flex w-3/5 flex-col justify-center items-center gap-6">
+        <Scene isCustomizable={true} showTexture={true} />
+      </div>
+      <div className="flex lg:hidden w-full sm:h-[380px] md:h-[480px] mt-12 flex-col justify-center items-center gap-6">
         <Scene isCustomizable={true} showTexture={true} />
       </div>
     </motion.section>

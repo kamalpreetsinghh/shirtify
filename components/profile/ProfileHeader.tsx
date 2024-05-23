@@ -14,7 +14,7 @@ const ProfileHeader = ({ user }: ProfileHeaderProps) => {
   if (!loggedInUserId) return null;
 
   return (
-    <div className="w-full max-w-[800px] flex-col px-8 lg:px-32 py-10">
+    <div className="w-full max-w-[800px] flex-col px-8 md:px-32 py-10">
       <div className="lg:inline-block">
         <ProfileInfo user={user} canEdit={user.id === loggedInUserId} />
         {user.id === loggedInUserId ? (

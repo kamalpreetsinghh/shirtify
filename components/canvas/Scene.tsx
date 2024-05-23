@@ -19,7 +19,7 @@ const Scene = ({
 }: SceneProps) => {
   return (
     <Canvas
-      camera={{ position: [0, 0, 2.5], fov: 20 }}
+      camera={{ position: [0, 0, 2.5], fov: window.innerWidth > 600 ? 20 : 30 }}
       gl={{ antialias: true }}
       dpr={[1, 1.5]}
       className="transition-all ease-in background-color"

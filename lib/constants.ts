@@ -1,5 +1,18 @@
 import { ITabInfo } from "./types";
 
+export const navLinks = [
+  {
+    title: "Create Designs",
+    href: "/customize",
+    icon: "/assets/images/camera.png",
+  },
+  {
+    title: "Explore Designs",
+    href: "/customizations",
+    icon: "/assets/images/shining.png",
+  },
+];
+
 export const EditorTabs: ITabInfo[] = [
   {
     name: "colorpicker",

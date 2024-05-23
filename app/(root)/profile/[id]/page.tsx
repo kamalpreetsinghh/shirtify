@@ -43,9 +43,7 @@ const ProfilePage = async ({
           id={id}
         />
         {customizations && customizations.length > 0 && (
-          <div className="mt-8 flex w-full justify-center">
-            <Pagination totalPages={totalPages} />
-          </div>
+          <Pagination totalPages={totalPages} />
         )}
       </>
     );

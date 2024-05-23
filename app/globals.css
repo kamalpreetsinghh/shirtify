@@ -50,7 +50,7 @@ body {
 }
 
 .root-container {
-  @apply pt-16 lg:pt-0;
+  @apply pt-16;
 }
 
 .text-hover:hover {
@@ -89,20 +89,17 @@ body {
 }
 
 .navbar {
-  @apply hidden lg:flex justify-between items-center w-full py-4 gap-4 px-6 sm:px-24;
+  @apply hidden lg:flex justify-between items-center fixed h-16 w-full py-4 gap-4 px-6 sm:px-24 z-50;
+  background-color: var(--background-color);
 }
 
 .mobile-nav {
-  @apply flex justify-between items-center fixed h-16 w-full p-5 lg:hidden;
+  @apply flex lg:hidden justify-between items-center fixed h-16 w-full p-5;
   background-color: var(--background-color);
 }
 
 .sheet-background-color {
   background-color: var(--sheet-background-color);
-}
-
-.header-nav_elements {
-  @apply mt-8 flex w-full flex-col items-start gap-5;
 }
 
 .editortabs-container {
@@ -114,13 +111,8 @@ body {
 }
 
 .filepicker-container {
-  @apply absolute left-full ml-3 glassmorphism p-3 w-[196px] h-[220px] flex flex-col rounded-md;
-}
-
-.filepicker-label {
-  @apply border border-gray-300 py-1.5 px-2 rounded-md shadow-sm text-xs  
-  focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500 cursor-pointer w-fit;
-  color: var(--text-grey-color);
+  @apply absolute left-full ml-3 p-3 w-[196px] h-[220px] flex flex-col rounded-md;
+  background-color: var(--sheet-background-color);
 }
 
 .aipicker-container {
@@ -136,10 +128,10 @@ body {
 }
 
 .glassmorphism {
-  background: rgba(255, 141, 194, 0.25);
+  background: rgba(255, 141, 194, 0.5);
   box-shadow: 0 2px 30px 0 rgba(31, 38, 135, 0.07);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
 
 .file-upload {

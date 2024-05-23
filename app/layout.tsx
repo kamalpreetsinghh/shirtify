@@ -15,7 +15,11 @@ export default function AppLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider appearance={{ variables: { colorPrimary: "#F50056" } }}>
+    <ClerkProvider
+      appearance={{ variables: { colorPrimary: "#F50056" } }}
+      signInFallbackRedirectUrl={"/"}
+      signUpFallbackRedirectUrl={"/"}
+    >
       <html lang="en" suppressHydrationWarning>
         <body className={inter.className}>
           <AppThemeProvider>{children}</AppThemeProvider>

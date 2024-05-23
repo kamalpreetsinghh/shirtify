@@ -4,6 +4,7 @@ import { SignedIn, SignedOut, UserButton, useAuth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitch from "./ThemeSwitch";
+import { navLinks } from "@/lib/constants";
 
 const Navbar = () => {
   const { userId } = useAuth();
@@ -21,16 +22,23 @@ const Navbar = () => {
             style={{ objectFit: "cover" }}
           />
         </Link>
-        <Link
-          href="/customizations"
-          className="text-primary font-semibold text-xl text-hover"
-        >
-          Explore Designs
-        </Link>
+        {navLinks.map((link) => {
+          return (
+            <Link
+              href={link.href}
+              className="text-primary font-semibold text-xl text-hover"
+              key={link.href}
+            >
+              {link.title}
+            </Link>
+          );
+        })}
+
         <SignedIn>
           <Link
             href={`/profile/${userId}`}
             className="text-primary font-semibold text-xl text-hover"
+            key="profile"
           >
             My Designs
           </Link>

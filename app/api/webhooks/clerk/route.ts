@@ -57,9 +57,6 @@ export async function POST(req: Request) {
   const { id } = evt.data;
   const eventType = evt.type;
 
-  console.log(`Webhook with and ID of ${id} and type of ${eventType}`);
-  console.log("Webhook body:", body);
-
   // CREATE
   if (eventType === "user.created") {
     let userName = "";
@@ -79,8 +76,6 @@ export async function POST(req: Request) {
       avatar: image_url,
     };
 
-    console.log(user);
-
     const newUser = await createUser(user);
 
     return NextResponse.json({ message: "OK", user: newUser });
@@ -99,8 +94,6 @@ export async function POST(req: Request) {
       username: username || "",
       avatar: imageUrl,
     };
-
-    console.log(user);
 
     const updatedUser = await updateUser(user);
 

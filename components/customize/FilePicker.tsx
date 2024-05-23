@@ -33,7 +33,7 @@ const FilePicker = ({ file, setFile, readFile }: IFilePicker) => {
       <div className="realtive w-full h-full">
         <input
           id="file-upload"
-          className="absolute z-50 opacity-0 w-full h-36 cursor-pointer"
+          className="absolute z-50 top-0 left-0 opacity-0 w-full h-36 cursor-pointer"
           type="file"
           accept="image/*"
           onChange={(e) => handleFileChange(e)}

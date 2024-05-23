@@ -181,7 +181,10 @@ const Customize = ({
 
         <SignedIn>
           {isSubmitting ? (
-            <div className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[80vh] flex items-center">
+            <div
+              className="absolute bottom-36 lg:top-0 lg:right-0 z-0 lg:mr-24 w-full lg:w-fit
+            lg:h-[100vh] flex items-center justify-center"
+            >
               <div className="half-circle-spinner">
                 <div className="circle circle-1"></div>
                 <div className="circle circle-2"></div>
@@ -191,7 +194,8 @@ const Customize = ({
             <>
               {!isShared && (
                 <motion.div
-                  className="absolute top-0 right-0 z-0 mt-24 mr-24 h-[85vh] flex items-center"
+                  className="absolute bottom-36 lg:top-0 lg:right-0 z-0 lg:mr-24 w-full lg:w-fit
+                  lg:h-[100vh] flex items-center justify-center"
                   whileHover={{ scale: 1.1 }}
                   animate={{
                     y: [0, -15, 0],
