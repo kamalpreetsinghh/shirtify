@@ -78,9 +78,11 @@ body {
   py-2 px-4 rounded-full text-white;
 }
 
-.rounded-button:hover {
-  color: var(--background-color);
-  background-color: var(--text-color);
+@media (min-width: 600px) {
+  .rounded-button:hover {
+    color: var(--background-color);
+    background-color: var(--text-color);
+  }
 }
 
 .auth {
@@ -204,7 +206,7 @@ body {
   animation: bblFadInOut 1.8s infinite ease-in-out;
 }
 .horizontal-spinner {
-  color: #fff;
+  color: var(--background-color);
   font-size: 4px;
   position: relative;
   text-indent: -9999em;
