@@ -10,10 +10,10 @@ const NotFoundPage = () => {
         404
       </h1>
       <h3 className="text-lg lg:text-4xl font-black py-8">
-        This page isn't here for you, but we are.
+        This page isn&apos;t here for you, but we are.
       </h3>
       <p>
-        If you manually entered the address, double check that it's spelled
+        If you manually entered the address, double check that it&apos;s spelled
         correctly
       </p>
       <Link className="rounded-button bg-primary my-8" href="/">
