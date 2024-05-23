@@ -43,7 +43,7 @@ const MobileNav = () => {
           <SheetTrigger>
             <TbMenuDeep className="w-6 h-6" color="#F50056" />
           </SheetTrigger>
-          <SheetContent className="sheet-content sm:w-64 sheet-background-color">
+          <SheetContent className="sm:w-64 sheet-background-color border-none">
             <ul className="mt-12 flex-col space-y-4">
               {navLinks.map((link) => {
                 const isActive = link.href === pathname;
