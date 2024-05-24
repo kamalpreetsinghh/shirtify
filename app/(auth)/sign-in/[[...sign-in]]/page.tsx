@@ -1,7 +1,11 @@
 import { SignIn } from "@clerk/nextjs";
 
-const SignInPage = () => {
-  return <SignIn />;
+const SignInPage = ({
+  searchParams: { redirectTo },
+}: {
+  searchParams: { redirectTo?: string };
+}) => {
+  return <SignIn fallbackRedirectUrl={redirectTo || "/"} />;
 };
 
 export default SignInPage;

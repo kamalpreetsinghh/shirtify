@@ -5,9 +5,15 @@ import Image from "next/image";
 import Link from "next/link";
 import ThemeSwitch from "./ThemeSwitch";
 import { navLinks } from "@/lib/constants";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const { userId } = useAuth();
+  const [redirectTo, setRedirectTo] = useState<string>("/");
+
+  useEffect(() => {
+    setRedirectTo(window.location.pathname);
+  }, []);
 
   return (
     <nav className="navbar">
@@ -28,6 +34,7 @@ const Navbar = () => {
               href={link.href}
               className="text-primary font-semibold text-xl text-hover"
               key={link.href}
+              onClick={() => setRedirectTo(link.href)}
             >
               {link.title}
             </Link>
@@ -39,6 +46,7 @@ const Navbar = () => {
             href={`/profile/${userId}`}
             className="text-primary font-semibold text-xl text-hover"
             key="profile"
+            onClick={() => setRedirectTo(`/profile/${userId}`)}
           >
             My Designs
           </Link>
@@ -50,11 +58,15 @@ const Navbar = () => {
         <>
           <SignedOut>
             <div className="rounded-button bg-primary">
-              <Link href="/sign-in">Sign In</Link>
+              <Link
+                href={`/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`}
+              >
+                Sign In
+              </Link>
             </div>
           </SignedOut>
           <SignedIn>
-            <UserButton />
+            <UserButton afterSignOutUrl={`${encodeURIComponent(redirectTo)}`} />
           </SignedIn>
         </>
       </div>

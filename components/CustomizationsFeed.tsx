@@ -60,7 +60,7 @@ const CustomizationsFeed = ({
                     className={`${pacifico.className} text-primary font-extrabold 
                     text-xl lg:text-3xl text-center mt-6`}
                   >
-                    <Link href="/customize">
+                    <Link href="/customize" className="cursor-pointer">
                       Create and share creative designs to the community.
                     </Link>
                   </motion.p>
@@ -84,7 +84,7 @@ const CustomizationsFeed = ({
                 whileHover={{ scale: 1.1 }}
                 className={`${pacifico.className} text-primary font-extrabold text-xl lg:text-3xl text-center mt-6`}
               >
-                <Link href="/customize">
+                <Link href="/customize" className="cursor-pointer">
                   Create and share creative designs to the community.
                 </Link>
               </motion.p>

@@ -13,9 +13,15 @@ import { usePathname } from "next/navigation";
 import ThemeSwitch from "./ThemeSwitch";
 import { TbMenuDeep } from "react-icons/tb";
 import { navLinks } from "@/lib/constants";
+import { useEffect, useState } from "react";
 
 const MobileNav = () => {
   const { userId } = useAuth();
+  const [redirectTo, setRedirectTo] = useState<string>("/");
+
+  useEffect(() => {
+    setRedirectTo(window.location.pathname);
+  }, []);
 
   const pathname = usePathname();
 
@@ -33,11 +39,15 @@ const MobileNav = () => {
         <ThemeSwitch />
         <SignedOut>
           <div className="rounded-button bg-primary">
-            <Link href="/sign-in">Sign In</Link>
+            <Link
+              href={`/sign-in?redirectTo=${encodeURIComponent(redirectTo)}`}
+            >
+              Sign In
+            </Link>
           </div>
         </SignedOut>
         <SignedIn>
-          <UserButton afterSignOutUrl="/" />
+          <UserButton afterSignOutUrl={`${encodeURIComponent(redirectTo)}`} />
         </SignedIn>
         <Sheet>
           <SheetTrigger>
@@ -56,6 +66,7 @@ const MobileNav = () => {
                         className={`${
                           isActive && "text-primary"
                         } font-semibold text-xl`}
+                        onClick={() => setRedirectTo(link.href)}
                       >
                         {link.title}
                       </Link>
@@ -72,6 +83,7 @@ const MobileNav = () => {
                       className={`${
                         pathname.includes("/profile") && "text-primary"
                       } font-semibold text-xl`}
+                      onClick={() => setRedirectTo(`/profile/${userId}`)}
                     >
                       My Designs
                     </Link>
